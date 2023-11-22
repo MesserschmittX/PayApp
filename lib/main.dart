@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:payapp/paypal_service.dart';
 
 import 'settings.dart';
 import 'about.dart';
@@ -114,7 +115,12 @@ class _HomePageState extends State<HomePage> {
             },
           ),
         ),
-        Text('Bisherige Transaktionen:'),
+        Column(
+          children: [
+            Text('Bisherige Transaktionen:'),
+            Text(PaypalService().getTransactions()),
+          ],
+        ),
       ][currentPageIndex],
     );
   }

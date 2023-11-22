@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:payapp/paypal_service.dart';
 
 import 'main.dart';
 import 'transfer_success.dart';
 
 class TransferPage extends StatelessWidget {
+  double price = 7;
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text('Transfer'),
@@ -63,7 +65,7 @@ class TransferPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "5",
+                    price.toStringAsFixed(2),
                     style: TextStyle(color: Colors.white, fontSize: 30),
                   ),
                   SizedBox(width: 10),
@@ -85,8 +87,16 @@ class TransferPage extends StatelessWidget {
                   elevation: 0,
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SuccessPage()));
+                  PaypalService().makePayment(
+                      price,
+                      (String msg) => {
+                            if (msg.startsWith("Order successful") ||
+                                msg.startsWith("shipping change"))
+                              {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => SuccessPage()))
+                              }
+                          });
                 },
               ),
             ),
