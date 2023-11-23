@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:payapp/paypal_service.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'settings.dart';
 import 'about.dart';
@@ -9,7 +11,11 @@ import 'splash_screen.dart';
 
 /// Flutter code sample for [NavigationBar].
 
-void main() => runApp(MyApp());
+void main() async {
+  var delegate = await LocalizationDelegate.create(
+      fallbackLocale: 'de', supportedLocales: ['en', 'de']);
+  runApp(LocalizedApp(delegate, MyApp()));
+}
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
@@ -18,17 +24,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Initialization',
-      home: FutureBuilder(
-        future: _initFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return HomePage();
-          } else {
-            return SplashScreen();
-          }
-        },
+    var localizationDelegate = LocalizedApp.of(context).delegate;
+
+    return LocalizationProvider(
+      state: LocalizationProvider.of(context).state,
+      child: MaterialApp(
+        title: translate('home_screen.init'),
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          localizationDelegate
+        ],
+        supportedLocales: localizationDelegate.supportedLocales,
+        locale: localizationDelegate.currentLocale,
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: FutureBuilder(
+          future: _initFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return HomePage();
+            } else {
+              return SplashScreen();
+            }
+          },
+        ),
       ),
     );
   }
@@ -61,7 +81,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         leading: Image.asset('assets/images/PayApp.jpeg'),
-        title: const Text('Pay App'),
+        title: Text(translate('home_screen.title')),
         actions: <Widget>[
           PopupMenuButton(
               icon: Icon(Icons.menu),
@@ -69,11 +89,11 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context) => [
                     PopupMenuItem(
                       value: "settings",
-                      child: Text('Settings'),
+                      child: Text(translate('home_screen.settings')),
                     ),
                     PopupMenuItem(
                       value: "about",
-                      child: Text('About'),
+                      child: Text(translate('home_screen.about')),
                     )
                   ])
         ],
@@ -86,15 +106,15 @@ class _HomePageState extends State<HomePage> {
         },
         indicatorColor: Color.fromARGB(255, 207, 194, 194),
         selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
+        destinations: <Widget>[
           NavigationDestination(
             selectedIcon: Icon(Icons.home),
             icon: Icon(Icons.home_outlined),
-            label: 'Home',
+            label: translate('home_screen.navigation.home'),
           ),
           NavigationDestination(
             icon: Icon(Icons.business),
-            label: 'Transaktionen',
+            label: translate('home_screen.navigation.transactions'),
           ),
         ],
       ),
@@ -103,7 +123,7 @@ class _HomePageState extends State<HomePage> {
           color: Color.fromARGB(255, 24, 26, 28),
           alignment: Alignment.center,
           child: ElevatedButton(
-            child: Text("Transfer"),
+            child: Text(translate("home_screen.transfer")),
             style: ElevatedButton.styleFrom(
               primary: Color.fromARGB(255, 163, 157, 157),
               elevation: 0,
@@ -117,7 +137,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Column(
           children: [
-            Text('Bisherige Transaktionen:'),
+            Text('${translate("home_screen.transactions")}:'),
             Text(PaypalService().getTransactions()),
           ],
         ),

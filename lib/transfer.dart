@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:payapp/paypal_service.dart';
 
 import 'main.dart';
@@ -9,7 +10,7 @@ class TransferPage extends StatelessWidget {
   double price = 7;
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('Transfer'),
+          title: Text(translate("transfer_screen.title")),
           automaticallyImplyLeading: false,
         ),
         body: Container(
@@ -19,7 +20,7 @@ class TransferPage extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Empfänger/in",
+                  translate("transfer_screen.recipient"),
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 SizedBox(width: 50),
@@ -32,7 +33,7 @@ class TransferPage extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Grund",
+                  translate("transfer_screen.description"),
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 SizedBox(width: 50),
@@ -81,7 +82,7 @@ class TransferPage extends StatelessWidget {
               width: 200,
               height: 50,
               child: ElevatedButton(
-                child: Text("Jetzt überweisen"),
+                child: Text(translate("transfer_screen.transfer_button")),
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(255, 48, 228, 45),
                   elevation: 0,
@@ -104,7 +105,7 @@ class TransferPage extends StatelessWidget {
               width: 160,
               height: 50,
               child: ElevatedButton(
-                child: Text("Abbrechen"),
+                child: Text(translate("transfer_screen.cancel_button")),
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(255, 163, 157, 157),
                   elevation: 0,

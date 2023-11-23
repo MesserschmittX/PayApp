@@ -1,0 +1,43 @@
+{
+    "home_screen": {
+        "title": "Pay App",
+        "init": "Initialisierung",
+        "about": "Über",
+        "transfer": "Überweisen",
+        "transactions": "Transaktionen",
+        "settings": "Einstellungen",
+        "navigation": {
+            "home": "Home",
+            "transactions": "Transaktionen"
+        }
+    },
+    "settings_screen": {
+        "title": "Einstellungen",
+        "language": {
+            "selection": {
+                "title": "Sprache wählen",
+                "message": "Bitte wählen Sie eine Sprache aus"
+            },
+            "name": {
+                "en": "Englisch",
+                "de": "Deutsch"
+            },
+            "change_language_button": "Sprache ändern",
+            "cancel_button": "Abbrechen"
+        }
+    },
+    "transfer_screen": {
+        "title": "Überweisen",
+        "description": "Beschreibung",
+        "recipient": "Empfänger",
+        "transfer_button": "Jetzt überweisen",
+        "cancel_button": "Abbrechen"
+    },
+    "transfer_success_screen": {
+        "title": "Überweiseung erfolgreich",
+        "close_button": "Schließen"
+    },
+    "about_screen": {
+        "title": "Über"
+    }
+}

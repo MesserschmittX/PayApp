@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 import 'main.dart';
 
 class SuccessPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('Transfer'),
+          title: Text(translate("transfer_success_screen.title")),
           automaticallyImplyLeading: false,
         ),
         body: Container(
@@ -34,7 +35,7 @@ class SuccessPage extends StatelessWidget {
               width: 200,
               height: 50,
               child: ElevatedButton(
-                child: Text("Zurück zu Home"),
+                child: Text(translate("transfer_success_screen.close_button")),
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(255, 58, 127, 230),
                   elevation: 0,

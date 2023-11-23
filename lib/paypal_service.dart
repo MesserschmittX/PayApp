@@ -4,7 +4,6 @@ import 'package:flutter_paypal_native/models/custom/environment.dart';
 import 'package:flutter_paypal_native/models/custom/order_callback.dart';
 import 'package:flutter_paypal_native/models/custom/purchase_unit.dart';
 import 'package:flutter_paypal_native/models/custom/user_action.dart';
-import 'package:flutter_paypal_native/str_helper.dart';
 
 class PaypalService {
   final _flutterPaypalNativePlugin = FlutterPaypalNative.instance;
@@ -18,8 +17,6 @@ class PaypalService {
     for (var i = 0; i < logQueue.length; i++) {
       transactions += logQueue[i] + "\n";
     }
-    print("############");
-    print(transactions);
     return transactions;
   }
 
@@ -29,13 +26,11 @@ class PaypalService {
 
     //add 1 item to cart. Max is 4!
     if (_flutterPaypalNativePlugin.canAddMorePurchaseUnit) {
+      _flutterPaypalNativePlugin.removeAllPurchaseItems();
       _flutterPaypalNativePlugin.addPurchaseUnit(
         FPayPalPurchaseUnit(
-          // price
           amount: price,
-
-          ///please use your own algorithm for referenceId. Maybe ProductID?
-          referenceId: FPayPalStrHelper.getRandomString(16),
+          currencyCode: FPayPalCurrencyCode.eur,
         ),
       );
     }
@@ -47,7 +42,7 @@ class PaypalService {
 
   Future<void> initPayPal() async {
     //set debugMode for error logging
-    FlutterPaypalNative.isDebugMode = true;
+    FlutterPaypalNative.isDebugMode = false;
 
     //initiate payPal plugin
     await _flutterPaypalNativePlugin.init(
