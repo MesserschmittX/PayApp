@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'login.dart';
 import 'firebase_exceptions.dart';
 
@@ -83,7 +84,7 @@ class _UserChangePasswordState extends State<UserChangePassword> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Change Password"),
+        title: Text(translate('user_changePassword_screen.title')),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -100,8 +101,10 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Old password',
-                  hintText: 'Enter password',
+                  labelText: translate(
+                      'user_changePassword_screen.old_password_label'),
+                  hintText:
+                      translate('user_changePassword_screen.old_password_hint'),
                   suffixIcon: IconButton(
                     icon: Icon(passwordOldVisible
                         ? Icons.visibility
@@ -129,8 +132,10 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'New password',
-                  hintText: 'Enter password',
+                  labelText: translate(
+                      'user_changePassword_screen.new_password_label'),
+                  hintText:
+                      translate('user_changePassword_screen.new_password_hint'),
                   suffixIcon: IconButton(
                     icon: Icon(passwordNew1Visible
                         ? Icons.visibility
@@ -158,8 +163,10 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'New password',
-                  hintText: 'Enter password',
+                  labelText: translate(
+                      'user_changePassword_screen.new_password_label'),
+                  hintText:
+                      translate('user_changePassword_screen.new_password_hint'),
                   suffixIcon: IconButton(
                     icon: Icon(passwordNew2Visible
                         ? Icons.visibility
@@ -188,8 +195,8 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                     ),
                   );
                   final snackBar = SnackBar(
-                    content: Text(
-                        "Eine E-Mail zum Reset ihres Passworts wurde übermittelt"),
+                    content: Text(translate(
+                        'user_changePassword_screen.reset_mail_sent')),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 } else {
@@ -202,7 +209,7 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                 }
               },
               child: Text(
-                'Forgot old password',
+                translate('user_changePassword_screen.forgot_password'),
                 style: TextStyle(color: Colors.blue, fontSize: 15),
               ),
             ),
@@ -248,7 +255,8 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                   ),
                 ),
                 child: Text(
-                  'Change Password',
+                  translate(
+                      'user_changePassword_screen.change_password_button'),
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),

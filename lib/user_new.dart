@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'home.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,20 +44,20 @@ class _UserNewState extends State<UserNew> {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        _error_signUp = 'The password provided is too weak';
+        _error_signUp = translate('user_new_screen.error.password_to_weak');
       } else if (e.code == 'email-already-in-use') {
-        _error_signUp = 'An account already exists for that email';
+        _error_signUp = translate('user_new_screen.error.already_exists');
       } else if (e.code == 'invalid-email') {
-        _error_signUp = 'Invalid e-mail address';
+        _error_signUp = translate('user_new_screen.error.invalid_email');
       } else {
-        _error_signUp = 'Error at sign up';
+        _error_signUp = translate('user_new_screen.error.sign_up');
       }
       final snackBar = SnackBar(
         content: Text(e.code),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } catch (e) {
-      _error_signUp = 'Error at sign up';
+      _error_signUp = translate('user_new_screen.error.sign_up');
       final snackBar = SnackBar(
         content: Text(_error_signUp),
       );
@@ -69,7 +70,7 @@ class _UserNewState extends State<UserNew> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Useranlage"),
+        title: Text(translate('user_new_screen.title')),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -83,7 +84,7 @@ class _UserNewState extends State<UserNew> {
                     /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                    child: Image.asset('assets/images/PayApp.jpeg')),
+                    child: Image.asset('assets/images/paysnap.jpeg')),
               ),
             ),
             Padding(
@@ -96,8 +97,8 @@ class _UserNewState extends State<UserNew> {
                 },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Email',
-                    hintText: 'Enter email'),
+                    labelText: translate('user_new_screen.email_label'),
+                    hintText: translate('user_new_screen.email_hint')),
               ),
             ),
             Padding(
@@ -112,8 +113,8 @@ class _UserNewState extends State<UserNew> {
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    hintText: 'Enter password'),
+                    labelText: translate('user_new_screen.password_label'),
+                    hintText: translate('user_new_screen.password_hint')),
               ),
             ),
             Container(
@@ -140,7 +141,7 @@ class _UserNewState extends State<UserNew> {
                   ),
                 ),
                 child: Text(
-                  'User anlegen',
+                  translate('user_new_screen.create_account_button'),
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),

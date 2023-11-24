@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'user_resetPassword.dart';
 import 'home.dart';
 import 'user_new.dart';
@@ -52,18 +53,18 @@ class _LoginState extends State<Login> {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
-        _error_signIn = 'Invalid login credentials';
+        _error_signIn = translate('login_screen.error.invalid_credentials');
       } else if (e.code == 'invalid-email') {
-        _error_signIn = 'Invalid e-mail address';
+        _error_signIn = translate('login_screen.error.invalid_email');
       } else {
-        _error_signIn = 'Error at sign in';
+        _error_signIn = translate('login_screen.sign_in');
       }
       final snackBar = SnackBar(
         content: Text(_error_signIn),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } catch (e) {
-      _error_signIn = 'Error at sign in';
+      _error_signIn = translate('login_screen.error.sign_in');
       final snackBar = SnackBar(
         content: Text(_error_signIn),
       );
@@ -78,7 +79,7 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text("Login Page"),
+          title: Text(translate('login_screen.title')),
           automaticallyImplyLeading: false,
         ),
         body: SingleChildScrollView(
@@ -93,7 +94,7 @@ class _LoginState extends State<Login> {
                       /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                      child: Image.asset('assets/images/PayApp.jpeg')),
+                      child: Image.asset('assets/images/paysnap.jpeg')),
                 ),
               ),
               Padding(
@@ -106,8 +107,8 @@ class _LoginState extends State<Login> {
                   },
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Email',
-                      hintText: 'Enter valid email id as abc@gmail.com'),
+                      labelText: translate('login_screen.email_label'),
+                      hintText: translate('login_screen.email_hint')),
                 ),
               ),
               Padding(
@@ -122,8 +123,8 @@ class _LoginState extends State<Login> {
                   },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    hintText: 'Enter secure password',
+                    labelText: translate('login_screen.password_label'),
+                    hintText: translate('login_screen.password_hint'),
                     suffixIcon: IconButton(
                       icon: Icon(passwordVisible
                           ? Icons.visibility
@@ -145,7 +146,7 @@ class _LoginState extends State<Login> {
                       MaterialPageRoute(builder: (_) => UserResetPassword()));
                 },
                 child: Text(
-                  'Forgot Password',
+                  translate('login_screen.forgot_password_button'),
                   style: TextStyle(color: Colors.blue, fontSize: 15),
                 ),
               ),
@@ -174,7 +175,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   child: Text(
-                    'Login',
+                    translate('login_screen.login_button'),
                     style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
@@ -188,7 +189,7 @@ class _LoginState extends State<Login> {
                       context, MaterialPageRoute(builder: (_) => UserNew()));
                 },
                 child: Text(
-                  'New User? Create Account',
+                  translate('login_screen.new_user_link'),
                   style: TextStyle(color: Colors.blue, fontSize: 15),
                 ),
               ),

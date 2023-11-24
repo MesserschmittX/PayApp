@@ -76,6 +76,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '992000671800',
     projectId: 'paysnap-e5617',
     storageBucket: 'paysnap-e5617.appspot.com',
-    iosBundleId: 'com.example.payApp.RunnerTests',
+    iosBundleId: 'com.payment.paysnap.RunnerTests',
   );
 }

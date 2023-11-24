@@ -1,29 +1,72 @@
 {
+    "current_language": "English",
+    "main_screen": {
+        "init": "Initializing"
+    },
     "home_screen": {
         "title": "Pay App",
-        "init": "Initialization",
-        "about": "About",
-        "transfer": "Transfer",
-        "transactions": "Transactions",
-        "settings": "Settings",
+        "home": {
+            "scan_qr_code": "Scan QR Code"
+        },
+        "transactions": {
+            "past_transactions": "Transactions"
+        },
         "navigation": {
             "home": "Home",
             "transactions": "Transactions"
+        },
+        "context_menu": {
+            "settings": "Settings",
+            "about": "About",
+            "logout": "Logout"
+        }
+    },
+    "login_screen": {
+        "title": "Login",
+        "email_label": "Email",
+        "email_hint": "Enter email",
+        "password_label": "Password",
+        "password_hint": "Enter password",
+        "forgot_password_button": "Forgot password",
+        "login_button": "Login",
+        "new_user_link": "New user? Create account",
+        "error": {
+            "invalid_credentials": "Invalid login credentials",
+            "invalid_email": "Invalid email address",
+            "sign_in": "Error at sign in"
+        }
+    },
+    "qr_scanner_screen": {
+        "title": "QR-Code scanner",
+        "wrong_qr_format": "Wrong QR-Code format",
+        "wrong_qr_content": "Wrong QR-Code content",
+        "scan_qr_code": "Scan a QR-Code",
+        "notification": {
+            "no_permission": "No permission"
         }
     },
     "settings_screen": {
         "title": "Settings",
-        "language": {
-            "selection": {
-                "title": "Select Language",
-                "message": "Please select your language"
-            },
-            "name": {
-                "en": "English",
-                "de": "German"
-            },
-            "change_language_button": "Change Language",
-            "cancel_button": "Cancel"
+        "general_settings": {
+            "title": "General",
+            "language_setting": {
+                "name": "Language",
+                "dialog": {
+                    "title": "Select language",
+                    "message": "Please select your language"
+                },
+                "language": {
+                    "en": "English",
+                    "de": "German"
+                },
+                "change_language_button": "Change language",
+                "cancel_button": "Cancel"
+            }
+        },
+        "account_settings": {
+            "title": "Account settings",
+            "change_password": "Change password",
+            "logout": "Logout"
         }
     },
     "transfer_screen": {
@@ -34,10 +77,41 @@
         "cancel_button": "Cancel"
     },
     "transfer_success_screen": {
-        "title": "Transfer Success",
+        "title": "Transfer success",
         "close_button": "Close"
     },
+    "user_new_screen": {
+        "title": "Create account",
+        "email_label": "Email",
+        "email_hint": "Enter valid email, eg: abc@gmail.com",
+        "password_label": "Password",
+        "password_hint": "Enter secure password",
+        "create_account_button": "Create account",
+        "error": {
+            "password_to_weak": "The password provided is too weak",
+            "already_exists": "An account already exists for that email",
+            "invalid_email": "Invalid email address",
+            "sign_up": "Error at sign up"
+        }
+    },
+    "user_changePassword_screen": {
+        "title": "Change password",
+        "old_password_label": "Old password",
+        "old_password_hint": "Enter old password",
+        "new_password_label": "New password",
+        "new_password_hint": "Enter new password",
+        "reset_mail_sent": "Email for password reset has been sent",
+        "forgot_password": "Forgot password",
+        "change_password_button": "Change password"
+    },
+    "user_resetPassword_screen": {
+        "title": "Reset password",
+        "email_label": "Email",
+        "email_hint": "Enter email",
+        "reset_password_button": "Reset password"
+    },
     "about_screen": {
-        "title": "About"
+        "title": "About",
+        "description": "Hier kommt Text: Diese App wurde von Daniel und Kevin entwickelt..."
     }
 }

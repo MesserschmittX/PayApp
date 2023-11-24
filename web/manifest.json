@@ -1,6 +1,6 @@
 {
-    "name": "payapp",
-    "short_name": "payapp",
+    "name": "paysnap",
+    "short_name": "paysnap",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

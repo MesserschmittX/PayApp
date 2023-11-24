@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'login.dart';
 import 'firebase_exceptions.dart';
 
@@ -37,7 +38,7 @@ class _UserResetPasswordState extends State<UserResetPassword> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Reset Password"),
+        title: Text(translate('user_resetPassword_screen.title')),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -51,7 +52,7 @@ class _UserResetPasswordState extends State<UserResetPassword> {
                     /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                    child: Image.asset('assets/images/PayApp.jpeg')),
+                    child: Image.asset('assets/images/paysnap.jpeg')),
               ),
             ),
             Padding(
@@ -65,8 +66,10 @@ class _UserResetPasswordState extends State<UserResetPassword> {
                 },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Email',
-                    hintText: 'Enter email'),
+                    labelText:
+                        translate('user_resetPassword_screen.email_label'),
+                    hintText:
+                        translate('user_resetPassword_screen.email_hint')),
               ),
             ),
             Container(
@@ -109,7 +112,7 @@ class _UserResetPasswordState extends State<UserResetPassword> {
                   ),
                 ),
                 child: Text(
-                  'Reset Password',
+                  translate('user_resetPassword_screen.reset_password_button'),
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),

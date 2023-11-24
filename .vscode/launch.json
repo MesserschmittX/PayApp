@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "payapp",
+            "name": "paysnap",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "payapp (profile mode)",
+            "name": "paysnap (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "payapp (release mode)",
+            "name": "paysnap (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

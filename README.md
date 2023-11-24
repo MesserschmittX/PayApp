@@ -1,4 +1,4 @@
-# payapp
+# paysnap
 
 A new Flutter project.
 

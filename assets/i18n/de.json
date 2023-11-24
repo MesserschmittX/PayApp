@@ -1,29 +1,72 @@
 {
+    "current_language": "Deutsch",
+    "main_screen": {
+        "init": "Initializieren"
+    },
     "home_screen": {
         "title": "Pay App",
-        "init": "Initialisierung",
-        "about": "Über",
-        "transfer": "Überweisen",
-        "transactions": "Transaktionen",
-        "settings": "Einstellungen",
+        "home": {
+            "scan_qr_code": "QR Code scannen"
+        },
+        "transactions": {
+            "past_transactions": "Bisherige Zahlungen"
+        },
         "navigation": {
             "home": "Home",
-            "transactions": "Transaktionen"
+            "transactions": "Zahlungen"
+        },
+        "context_menu": {
+            "settings": "Einstellungen",
+            "about": "Über",
+            "logout": "Abmelden"
+        }
+    },
+    "login_screen": {
+        "title": "Anmelden",
+        "email_label": "Email",
+        "email_hint": "Email Addresse eingeben",
+        "password_label": "Passwort",
+        "password_hint": "Passwort eingeben",
+        "forgot_password_button": "Passwort vergessen",
+        "login_button": "Anmelden",
+        "new_user_link": "Neuer Nutzer? Konto erstellen",
+        "error": {
+            "invalid_credentials": "Ungültige Anmeldedaten",
+            "invalid_email": "Ungültige Email Addresse",
+            "sign_in": "Fehler bei der Anmeldung"
+        }
+    },
+    "qr_scanner_screen": {
+        "title": "QR-Code Leser",
+        "wrong_qr_format": "Falsches QR-Code Format",
+        "wrong_qr_content": "Falscher QR-Code Inhalt",
+        "scan_qr_code": "Scanne einen QR-Code",
+        "notification": {
+            "no_permission": "Keine Berechtigung"
         }
     },
     "settings_screen": {
         "title": "Einstellungen",
-        "language": {
-            "selection": {
-                "title": "Sprache wählen",
-                "message": "Bitte wählen Sie eine Sprache aus"
-            },
-            "name": {
-                "en": "Englisch",
-                "de": "Deutsch"
-            },
-            "change_language_button": "Sprache ändern",
-            "cancel_button": "Abbrechen"
+        "general_settings": {
+            "title": "Allgemein",
+            "language_setting": {
+                "name": "Sprache",
+                "dialog": {
+                    "title": "Sprache wählen",
+                    "message": "Bitte wählen Sie eine Sprache aus"
+                },
+                "language": {
+                    "en": "Englisch",
+                    "de": "Deutsch"
+                },
+                "change_language_button": "Sprache ändern",
+                "cancel_button": "Abbrechen"
+            }
+        },
+        "account_settings": {
+            "title": "Konto",
+            "change_password": "Passwort ändern",
+            "logout": "Abmelden"
         }
     },
     "transfer_screen": {
@@ -37,7 +80,38 @@
         "title": "Überweiseung erfolgreich",
         "close_button": "Schließen"
     },
+    "user_new_screen": {
+        "title": "Konto erstellen",
+        "email_label": "Email",
+        "email_hint": "Email Addresse eingeben, bsp.: abc@gmail.com",
+        "password_label": "Passwort",
+        "password_hint": "Sicheres Passwort eingeben",
+        "create_account_button": "Konto erstellen",
+        "error": {
+            "password_to_weak": "Das Passwort ist zu schwach",
+            "already_exists": "Ein Konto mit dieser Email Addresse existiert bereits",
+            "invalid_email": "Ungültige Email Addresse",
+            "sign_up": "Fehler bei der Kontoerstellung"
+        }
+    },
+    "user_changePassword_screen": {
+        "title": "Passwort Ändern",
+        "old_password_label": "Altes Passwort",
+        "old_password_hint": "Altes Passwort eingeben",
+        "new_password_label": "Neues Passwort",
+        "new_password_hint": "Neues Passwort eingeben",
+        "reset_mail_sent": "Eine Email zum Reset ihres Passworts wurde übermittelt",
+        "forgot_password": "Passwort vergessen",
+        "change_password_button": "Passwort ändern"
+    },
+    "user_resetPassword_screen": {
+        "title": "Password zurücksetzen",
+        "email_label": "Email",
+        "email_hint": "Email Addresse eingeben",
+        "reset_password_button": "Password zurücksetzen"
+    },
     "about_screen": {
-        "title": "Über"
+        "title": "Über",
+        "description": "Hier kommt Text: Diese App wurde von Daniel und Kevin entwickelt..."
     }
 }

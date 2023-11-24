@@ -1,48 +1,48 @@
 {
-  "project_info": {
-    "project_number": "992000671800",
-    "project_id": "paysnap-e5617",
-    "storage_bucket": "paysnap-e5617.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:992000671800:android:e6e0e5216d201b474ae6cd",
-        "android_client_info": {
-          "package_name": "com.example.pay_app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD99BKV2ENJTBKcrz3WBdgc4rkR1S8PPUg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
+    "project_info": {
+        "project_number": "992000671800",
+        "project_id": "paysnap-e5617",
+        "storage_bucket": "paysnap-e5617.appspot.com"
     },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:992000671800:android:7a9d57807c3ae5514ae6cd",
-        "android_client_info": {
-          "package_name": "com.example.payapp"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
+    "client": [
         {
-          "current_key": "AIzaSyD99BKV2ENJTBKcrz3WBdgc4rkR1S8PPUg"
+            "client_info": {
+                "mobilesdk_app_id": "1:992000671800:android:e6e0e5216d201b474ae6cd",
+                "android_client_info": {
+                    "package_name": "com.payment.paysnap"
+                }
+            },
+            "oauth_client": [],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyD99BKV2ENJTBKcrz3WBdgc4rkR1S8PPUg"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": []
+                }
+            }
+        },
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:992000671800:android:7a9d57807c3ae5514ae6cd",
+                "android_client_info": {
+                    "package_name": "com.payment.paysnap"
+                }
+            },
+            "oauth_client": [],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyD99BKV2ENJTBKcrz3WBdgc4rkR1S8PPUg"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": []
+                }
+            }
         }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    }
-  ],
-  "configuration_version": "1"
+    ],
+    "configuration_version": "1"
 }

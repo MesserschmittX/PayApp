@@ -47,7 +47,7 @@ class PaypalService {
     //initiate payPal plugin
     await _flutterPaypalNativePlugin.init(
       //your app id !!! No Underscore!!! see readme.md for help
-      returnUrl: "com.example.payapp://paypalpay",
+      returnUrl: "com.payment.paysnap://paypalpay",
       //client id from developer dashboard
       clientID:
           "AdMa4WtIendZju-VBwvie0cHQKSr5v7yYnIn10RGBVlTjuVDQocWKSdNOE2csieQ1Xg2QxP8DiM-w81B",

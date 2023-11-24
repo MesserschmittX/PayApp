@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -32,7 +33,7 @@ class _QRScannerState extends State<QRScanner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('QR-Code Scanner')),
+      appBar: AppBar(title: Text(translate('qr_scanner_screen.title'))),
       body: Column(
         children: <Widget>[
           Expanded(flex: 4, child: _buildQrView(context)),
@@ -45,13 +46,13 @@ class _QRScannerState extends State<QRScanner> {
                 children: <Widget>[
                   if (result != null &&
                       describeEnum(result!.format) != 'qrcode')
-                    Text('Falsches Code Format. Scanne einen QR-Code')
+                    Text(translate('qr_scanner_screen.wrong_qr_format'))
                   else if (result != null &&
                       describeEnum(result!.format) == 'qrcode' &&
                       !result!.code!.startsWith('paysnap://transfer'))
-                    Text('Falscher QR-Code Inhalt')
+                    Text(translate('qr_scanner_screen.wrong_qr_content'))
                   else
-                    const Text('Scanne einen QR-Code'),
+                    Text(translate('qr_scanner_screen.scan_qr_code')),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -129,7 +130,9 @@ class _QRScannerState extends State<QRScanner> {
     log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('no Permission')),
+        SnackBar(
+            content: Text(
+                translate('qr_scanner_screen.notification.no_permission'))),
       );
     }
   }
