@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class TransferArguments {
-  final String test;
+class TransferData {
+  String uid;
+  String product;
+  double amount;
 
-  TransferArguments(this.test);
+  TransferData(this.uid, this.product, this.amount);
 }

@@ -8,8 +8,6 @@ class SplashScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset('assets/images/PayApp.jpeg'),
-          SizedBox(height: 20),
-          CircularProgressIndicator()
         ],
       ),
     );

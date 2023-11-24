@@ -1,64 +1,49 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'login.dart';
+import 'user_changePassword.dart';
+
+import 'package:settings_ui/settings_ui.dart';
 
 class SettingsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(translate('settings_screen.title')),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-                padding: EdgeInsets.only(top: 25, bottom: 160),
-                child: CupertinoButton.filled(
-                  child: Text(translate(
-                      'settings_screen.language.change_language_button')),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 36.0),
-                  onPressed: () => _onActionSheetPress(context),
-                )),
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(title: Text('Settings')),
+        body: SettingsList(
+          sections: [
+            SettingsSection(
+              title: Text('General'),
+              tiles: <SettingsTile>[
+                SettingsTile.navigation(
+                  leading: Icon(Icons.language),
+                  title: Text('Language'),
+                  value: Text('English'),
+                ),
+              ],
+            ),
+            SettingsSection(
+              title: Text('Account'),
+              tiles: <SettingsTile>[
+                SettingsTile.navigation(
+                  leading: Icon(Icons.password),
+                  title: Text('Change password'),
+                  onPressed: (context) async => Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => UserChangePassword())),
+                ),
+                SettingsTile.navigation(
+                  leading: Icon(Icons.logout),
+                  title: Text('Logout'),
+                  onPressed: (context) async => logout(context),
+                ),
+              ],
+            ),
           ],
         ),
-      ),
-    );
-  }
+      );
 
-  void showDemoActionSheet(
-      {required BuildContext context, required Widget child}) {
-    showCupertinoModalPopup<String>(
-        context: context,
-        builder: (BuildContext context) => child).then((String? value) {
-      if (value != null) changeLocale(context, value);
-    });
-  }
-
-  void _onActionSheetPress(BuildContext context) {
-    showDemoActionSheet(
-      context: context,
-      child: CupertinoActionSheet(
-        title: Text(translate('settings_screen.language.selection.title')),
-        message: Text(translate('settings_screen.language.selection.message')),
-        actions: <Widget>[
-          CupertinoActionSheetAction(
-            child: Text(translate('settings_screen.language.name.en')),
-            onPressed: () => Navigator.pop(context, 'en'),
-          ),
-          CupertinoActionSheetAction(
-            child: Text(translate('settings_screen.language.name.de')),
-            onPressed: () => Navigator.pop(context, 'de'),
-          ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          child: Text(translate('settings_screen.language.cancel_button')),
-          isDefaultAction: true,
-          onPressed: () => Navigator.pop(context, null),
-        ),
-      ),
-    );
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => Login()));
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
-import 'main.dart';
+import 'home.dart';
 
 class SuccessPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(

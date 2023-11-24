@@ -4,10 +4,13 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:payapp/paypal_service.dart';
 
 import 'main.dart';
+import 'transfer_data.dart';
 import 'transfer_success.dart';
 
 class TransferPage extends StatelessWidget {
-  double price = 7;
+  TransferData transferData;
+  TransferPage(this.transferData);
+
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(translate("transfer_screen.title")),
@@ -25,7 +28,7 @@ class TransferPage extends StatelessWidget {
                 ),
                 SizedBox(width: 50),
                 Text(
-                  "Testempfängerin",
+                  transferData.uid,
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 )
               ],
@@ -66,7 +69,7 @@ class TransferPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    price.toStringAsFixed(2),
+                    transferData.amount.toString(),
                     style: TextStyle(color: Colors.white, fontSize: 30),
                   ),
                   SizedBox(width: 10),
@@ -89,7 +92,7 @@ class TransferPage extends StatelessWidget {
                 ),
                 onPressed: () {
                   PaypalService().makePayment(
-                      price,
+                      transferData.amount,
                       (String msg) => {
                             if (msg.startsWith("Order successful") ||
                                 msg.startsWith("shipping change"))
@@ -111,8 +114,7 @@ class TransferPage extends StatelessWidget {
                   elevation: 0,
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                  Navigator.pop(context);
                 },
               ),
             ),
