@@ -18,6 +18,7 @@ class _QRScannerState extends State<QRScanner> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  bool disposed = false;
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
@@ -89,6 +90,9 @@ class _QRScannerState extends State<QRScanner> {
   }
 
   Widget _buildQrView(BuildContext context) {
+    if (disposed) {
+      return const Text('Disposed');
+    }
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
             MediaQuery.of(context).size.height < 400)
@@ -120,8 +124,8 @@ class _QRScannerState extends State<QRScanner> {
       if (result != null &&
           describeEnum(result!.format) == 'qrcode' &&
           result!.code!.startsWith('paysnap://')) {
-        dispose();
         launchUrl(Uri.parse(result!.code!));
+        dispose();
       }
     });
   }
@@ -139,6 +143,7 @@ class _QRScannerState extends State<QRScanner> {
 
   @override
   void dispose() {
+    disposed = true;
     controller?.dispose();
     super.dispose();
   }

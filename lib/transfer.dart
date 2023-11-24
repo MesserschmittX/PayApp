@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:paysnap/home.dart';
 import 'package:paysnap/paypal_service.dart';
 
 import 'main.dart';
@@ -41,7 +42,7 @@ class TransferPage extends StatelessWidget {
                 ),
                 SizedBox(width: 50),
                 Text(
-                  "Testgrund",
+                  transferData.product,
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 )
               ],
@@ -114,7 +115,8 @@ class TransferPage extends StatelessWidget {
                   elevation: 0,
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => HomePage()));
                 },
               ),
             ),
