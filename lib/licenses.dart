@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:paysnap/oss_licenses.dart';
+import 'package:paysnap/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // ####################
@@ -110,10 +111,7 @@ class MiscOssLicenseSingle extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
                   child: InkWell(
-                    child: Text(package.homepage!,
-                        style: const TextStyle(
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline)),
+                    child: Text(package.homepage!, style: Styles.linkText),
                     onTap: () => launch(package.homepage!),
                   )),
             if (package.description.isNotEmpty || package.homepage != null)

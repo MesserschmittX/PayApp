@@ -33,12 +33,13 @@ class _QRCreatorState extends State<QRCreator> {
             Padding(
               padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 15),
               child: TextField(
-                maxLength: 10,
+                maxLength: 7,
                 keyboardType: TextInputType.number,
                 controller: amountController,
                 onChanged: (value) async {},
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
+                    suffixIcon: Icon(Icons.euro),
                     labelText: translate('qr_creator_screen.amount_label'),
                     hintText: translate('qr_creator_screen.amount_hint')),
               ),
@@ -59,13 +60,8 @@ class _QRCreatorState extends State<QRCreator> {
             Padding(
               padding: const EdgeInsets.only(
                   left: 15.0, right: 15.0, top: 5, bottom: 10),
-              child: ElevatedButton(
+              child: FilledButton(
                 child: Text(translate('qr_creator_screen.create_code_button')),
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 163, 157, 157),
-                  elevation: 0,
-                  alignment: Alignment.center,
-                ),
                 onPressed: () async {
                   await _createQRCode();
                 },

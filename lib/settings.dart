@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:paysnap/styles.dart';
 import 'login.dart';
 import 'user_changePassword.dart';
 
@@ -10,6 +11,7 @@ import 'package:settings_ui/settings_ui.dart';
 class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    bool darkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('settings_screen.title')),
@@ -20,11 +22,24 @@ class SettingsPage extends StatelessWidget {
             title: Text(translate('settings_screen.general_settings.title')),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
-                leading: Icon(Icons.language),
+                leading: const Icon(Icons.language),
                 title: Text(translate(
                     'settings_screen.general_settings.language_setting.name')),
                 value: Text(translate('current_language')),
                 onPressed: (context) async => changeLanguage(context),
+              ),
+              SettingsTile.navigation(
+                leading: darkMode
+                    ? const Icon(Icons.dark_mode)
+                    : const Icon(Icons.light_mode),
+                title: Text(translate(
+                    'settings_screen.general_settings.dark_mode_setting.name')),
+                value: Text(darkMode
+                    ? translate(
+                        'settings_screen.general_settings.dark_mode_setting.themes.dark')
+                    : translate(
+                        'settings_screen.general_settings.dark_mode_setting.themes.light')),
+                onPressed: (context) async => switchTheme(context),
               ),
             ],
           ),
@@ -32,7 +47,7 @@ class SettingsPage extends StatelessWidget {
             title: Text(translate('settings_screen.account_settings.title')),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
-                leading: Icon(Icons.password),
+                leading: const Icon(Icons.password),
                 title: Text(translate(
                     'settings_screen.account_settings.change_password')),
                 onPressed: (context) async => Navigator.of(context).push(
@@ -40,7 +55,7 @@ class SettingsPage extends StatelessWidget {
                         builder: (context) => UserChangePassword())),
               ),
               SettingsTile.navigation(
-                leading: Icon(Icons.logout),
+                leading: const Icon(Icons.logout),
                 title:
                     Text(translate('settings_screen.account_settings.logout')),
                 onPressed: (context) async => logout(context),
@@ -50,6 +65,12 @@ class SettingsPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void switchTheme(context) {
+    Styles.changeBrightness!(Brightness.dark == Theme.of(context).brightness
+        ? Brightness.light
+        : Brightness.dark);
   }
 
   void showLanguageSwitcher(

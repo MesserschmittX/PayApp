@@ -36,7 +36,6 @@ class _UserResetPasswordState extends State<UserResetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(translate('user_resetPassword_screen.title')),
       ),
@@ -49,9 +48,6 @@ class _UserResetPasswordState extends State<UserResetPassword> {
                 child: Container(
                     width: 200,
                     height: 150,
-                    /*decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(50.0)),*/
                     child: Image.asset('assets/images/paysnap.jpeg')),
               ),
             ),
@@ -65,7 +61,7 @@ class _UserResetPasswordState extends State<UserResetPassword> {
                   updateResetState();
                 },
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText:
                         translate('user_resetPassword_screen.email_label'),
                     hintText:
@@ -75,46 +71,34 @@ class _UserResetPasswordState extends State<UserResetPassword> {
             Container(
               height: 50,
               width: 250,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
-                onPressed: () async {
-                  if (_resetEnabled) {
-                    final _status =
-                        await resetPassword(mail: mailController.text);
-                    if (_status == AuthStatus.successful) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Login(),
-                        ),
-                      );
-                    } else {
-                      final _error =
-                          AuthExceptionHandler.generateErrorMessage(_status);
-                      final snackBar = SnackBar(
-                        content: Text(_error),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                  }
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                      // Ändere die Farbe basierend auf dem Zustand des Buttons
-                      if (_resetEnabled) {
-                        return Colors.blue; // Farbe für deaktivierten Zustand
-                      } else {
-                        return Colors.grey;
-                      } // Farbe für aktivierten Zustand
-                    },
-                  ),
-                ),
-                child: Text(
-                  translate('user_resetPassword_screen.reset_password_button'),
-                  style: TextStyle(color: Colors.white, fontSize: 25),
-                ),
+              child: ElevatedButton(
+                onPressed: !_resetEnabled
+                    ? null
+                    : () async {
+                        if (_resetEnabled) {
+                          _status =
+                              await resetPassword(mail: mailController.text);
+                          if (_status == AuthStatus.successful) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Login(),
+                              ),
+                            );
+                          } else {
+                            final _error =
+                                AuthExceptionHandler.generateErrorMessage(
+                                    _status);
+                            final snackBar = SnackBar(
+                              content: Text(_error),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                        }
+                      },
+                child: Text(translate(
+                    'user_resetPassword_screen.reset_password_button')),
               ),
             ),
           ],

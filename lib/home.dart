@@ -182,7 +182,6 @@ class _HomePageState extends State<HomePage> {
               currentPageIndex = index;
             });
           },
-          indicatorColor: const Color.fromARGB(255, 207, 194, 194),
           selectedIndex: currentPageIndex,
           destinations: <Widget>[
             NavigationDestination(
@@ -198,20 +197,14 @@ class _HomePageState extends State<HomePage> {
         ),
         body: <Widget>[
           Container(
-            color: Color.fromARGB(255, 24, 26, 28),
             alignment: Alignment.center,
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.only(
                       left: 15.0, right: 15.0, top: 30, bottom: 10),
-                  child: ElevatedButton(
+                  child: FilledButton(
                     child: Text(translate('home_screen.home.scan_qr_code')),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 163, 157, 157),
-                      elevation: 0,
-                      alignment: Alignment.center,
-                    ),
                     onPressed: () async {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const QRScanner(),
@@ -219,13 +212,8 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
-                ElevatedButton(
+                FilledButton(
                   child: Text(translate('home_screen.home.create_qr_code')),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 163, 157, 157),
-                    elevation: 0,
-                    alignment: Alignment.center,
-                  ),
                   onPressed: () async {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const QRCreator(),
@@ -239,7 +227,11 @@ class _HomePageState extends State<HomePage> {
             children: [
               Text(
                   '${translate('home_screen.transactions.past_transactions')}:'),
-              Text(PaypalService().getTransactions()),
+              Padding(
+                padding:
+                    const EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0),
+                child: Text(PaypalService().getTransactions()),
+              ),
             ],
           ),
         ][currentPageIndex],

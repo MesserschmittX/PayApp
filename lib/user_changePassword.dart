@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:paysnap/styles.dart';
 import 'login.dart';
 import 'firebase_exceptions.dart';
 
@@ -82,7 +83,6 @@ class _UserChangePasswordState extends State<UserChangePassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(translate('user_changePassword_screen.title')),
       ),
@@ -100,7 +100,7 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                   updateChangeState();
                 },
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText: translate(
                       'user_changePassword_screen.old_password_label'),
                   hintText:
@@ -131,7 +131,7 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                   updateChangeState();
                 },
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText: translate(
                       'user_changePassword_screen.new_password_label'),
                   hintText:
@@ -162,7 +162,7 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                   updateChangeState();
                 },
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText: translate(
                       'user_changePassword_screen.new_password_label'),
                   hintText:
@@ -210,55 +210,39 @@ class _UserChangePasswordState extends State<UserChangePassword> {
               },
               child: Text(
                 translate('user_changePassword_screen.forgot_password'),
-                style: TextStyle(color: Colors.blue, fontSize: 15),
+                style: Styles.linkText,
               ),
             ),
             Container(
               height: 50,
               width: 250,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
-                onPressed: () async {
-                  if (_changeEnabled) {
-                    final _status = await changePassword(
-                        passwordOld: passwordOldController.text,
-                        passwordNew1: passwordNew1Controller.text,
-                        passwordNew2: passwordNew2Controller.text);
-                    if (_status == AuthStatus.successful) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SettingsPage(),
-                        ),
-                      );
-                    } else {
-                      final _error =
-                          AuthExceptionHandler.generateErrorMessage(_status);
-                      final snackBar = SnackBar(
-                        content: Text(_error),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                  }
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                      // Ändere die Farbe basierend auf dem Zustand des Buttons
-                      if (_changeEnabled) {
-                        return Colors.blue; // Farbe für deaktivierten Zustand
-                      } else {
-                        return Colors.grey;
-                      } // Farbe für aktivierten Zustand
-                    },
-                  ),
-                ),
-                child: Text(
-                  translate(
-                      'user_changePassword_screen.change_password_button'),
-                  style: TextStyle(color: Colors.white, fontSize: 25),
-                ),
+              child: ElevatedButton(
+                onPressed: !_changeEnabled
+                    ? null
+                    : () async {
+                        final _status = await changePassword(
+                            passwordOld: passwordOldController.text,
+                            passwordNew1: passwordNew1Controller.text,
+                            passwordNew2: passwordNew2Controller.text);
+                        if (_status == AuthStatus.successful) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SettingsPage(),
+                            ),
+                          );
+                        } else {
+                          final _error =
+                              AuthExceptionHandler.generateErrorMessage(
+                                  _status);
+                          final snackBar = SnackBar(
+                            content: Text(_error),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                      },
+                child: Text(translate(
+                    'user_changePassword_screen.change_password_button')),
               ),
             ),
           ],

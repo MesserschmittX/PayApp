@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:paysnap/styles.dart';
 import 'user_resetPassword.dart';
 import 'home.dart';
 import 'user_new.dart';
@@ -77,7 +78,6 @@ class _LoginState extends State<Login> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(translate('login_screen.title')),
           automaticallyImplyLeading: false,
@@ -91,9 +91,6 @@ class _LoginState extends State<Login> {
                   child: Container(
                       width: 200,
                       height: 150,
-                      /*decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(50.0)),*/
                       child: Image.asset('assets/images/paysnap.jpeg')),
                 ),
               ),
@@ -147,40 +144,18 @@ class _LoginState extends State<Login> {
                 },
                 child: Text(
                   translate('login_screen.forgot_password_button'),
-                  style: TextStyle(color: Colors.blue, fontSize: 15),
+                  style: Styles.linkText,
                 ),
               ),
               Container(
                 height: 50,
                 width: 250,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(20)),
-                child: TextButton(
-                  onPressed: () {
-                    if (_loginEnabled) {
-                      signIn();
-                    }
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                      (Set<MaterialState> states) {
-                        // Ändere die Farbe basierend auf dem Zustand des Buttons
-                        if (_loginEnabled) {
-                          return Colors.blue; // Farbe für deaktivierten Zustand
-                        } else {
-                          return Colors.grey;
-                        } // Farbe für aktivierten Zustand
-                      },
-                    ),
-                  ),
-                  child: Text(
-                    translate('login_screen.login_button'),
-                    style: TextStyle(color: Colors.white, fontSize: 25),
-                  ),
+                child: ElevatedButton(
+                  onPressed: !_loginEnabled ? null : () => signIn(),
+                  child: Text(translate('login_screen.login_button')),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 130,
               ),
               TextButton(
@@ -190,7 +165,7 @@ class _LoginState extends State<Login> {
                 },
                 child: Text(
                   translate('login_screen.new_user_link'),
-                  style: TextStyle(color: Colors.blue, fontSize: 15),
+                  style: Styles.linkText,
                 ),
               ),
             ],

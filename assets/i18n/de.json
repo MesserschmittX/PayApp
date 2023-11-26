@@ -77,6 +77,13 @@
                 },
                 "change_language_button": "Sprache ändern",
                 "cancel_button": "Abbrechen"
+            },
+            "dark_mode_setting": {
+                "name": "Farbmodus",
+                "themes": {
+                    "light": "Hell",
+                    "dark": "Dunkel"
+                }
             }
         },
         "account_settings": {

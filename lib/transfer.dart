@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:paysnap/home.dart';
 import 'package:paysnap/paypal_service.dart';
 
-import 'main.dart';
 import 'transfer_data.dart';
 import 'transfer_success.dart';
 
@@ -18,107 +16,77 @@ class TransferPage extends StatelessWidget {
           automaticallyImplyLeading: false,
         ),
         body: Container(
-          color: Color.fromARGB(255, 24, 26, 28),
           alignment: Alignment.center,
           child: Column(children: [
-            Row(
-              children: [
-                Text(
-                  translate("transfer_screen.recipient"),
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                SizedBox(width: 50),
-                Text(
-                  transferData.uid,
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  translate("transfer_screen.description"),
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                SizedBox(width: 50),
-                Text(
-                  transferData.product,
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                )
-              ],
+            Padding(
+              padding: EdgeInsets.only(left: 20, right: 20),
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "${translate("transfer_screen.recipient")}: ",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(transferData.product),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "${translate("transfer_screen.description")}: ",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(transferData.product),
+                  ),
+                ],
+              ),
             ),
             Container(
-              margin: EdgeInsets.all(100.0),
+              margin: const EdgeInsets.only(
+                  top: 50, left: 100, right: 100, bottom: 50),
               width: 200,
               height: 200,
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Colors.blue,
-                      Colors.red,
-                    ],
-                  ),
-                  color: Color.fromARGB(255, 38, 186, 68),
                   shape: BoxShape.circle,
                   border: Border.all(
                     width: 6,
-                    color: Colors.white,
+                    color: Theme.of(context).splashColor,
                   )),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    transferData.amount.toString(),
-                    style: TextStyle(color: Colors.white, fontSize: 30),
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    "€",
-                    style: TextStyle(color: Colors.white, fontSize: 30),
-                  )
+                  Text("${transferData.amount} €",
+                      style: const TextStyle(fontSize: 40))
                 ],
               ),
             ),
-            //Image.asset('assets/images/PayPal.png'),
-            SizedBox(
-              width: 200,
-              height: 50,
-              child: ElevatedButton(
-                child: Text(translate("transfer_screen.transfer_button")),
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 48, 228, 45),
-                  elevation: 0,
-                ),
-                onPressed: () {
-                  PaypalService().makePayment(
-                      transferData.amount,
-                      (String msg) => {
-                            if (msg.startsWith("Order successful") ||
-                                msg.startsWith("shipping change"))
-                              {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => SuccessPage()))
-                              }
-                          });
-                },
-              ),
+            FilledButton(
+              child: Text(translate("transfer_screen.transfer_button")),
+              onPressed: () {
+                PaypalService().makePayment(
+                    transferData.amount,
+                    (String msg) => {
+                          if (msg.startsWith("Order successful") ||
+                              msg.startsWith("shipping change"))
+                            {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => SuccessPage()))
+                            }
+                        });
+              },
             ),
-            SizedBox(
-              width: 160,
-              height: 50,
-              child: ElevatedButton(
-                child: Text(translate("transfer_screen.cancel_button")),
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 163, 157, 157),
-                  elevation: 0,
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomePage()));
-                },
-              ),
+            ElevatedButton(
+              child: Text(translate("transfer_screen.cancel_button")),
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => HomePage()));
+              },
             ),
           ]),
         ),

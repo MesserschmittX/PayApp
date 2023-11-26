@@ -68,7 +68,6 @@ class _UserNewState extends State<UserNew> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(translate('user_new_screen.title')),
       ),
@@ -81,22 +80,19 @@ class _UserNewState extends State<UserNew> {
                 child: Container(
                     width: 200,
                     height: 150,
-                    /*decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(50.0)),*/
                     child: Image.asset('assets/images/paysnap.jpeg')),
               ),
             ),
             Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 controller: mailController,
                 onChanged: (value) {
                   updateSignupState();
                 },
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: translate('user_new_screen.email_label'),
                     hintText: translate('user_new_screen.email_hint')),
               ),
@@ -112,39 +108,14 @@ class _UserNewState extends State<UserNew> {
                 },
                 obscureText: true,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: translate('user_new_screen.password_label'),
                     hintText: translate('user_new_screen.password_hint')),
               ),
             ),
-            Container(
-              height: 50,
-              width: 250,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
-                onPressed: () {
-                  if (_signupEnabled) {
-                    signUp();
-                  }
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                      // Ändere die Farbe basierend auf dem Zustand des Buttons
-                      if (_signupEnabled) {
-                        return Colors.blue; // Farbe für deaktivierten Zustand
-                      } else {
-                        return Colors.grey;
-                      } // Farbe für aktivierten Zustand
-                    },
-                  ),
-                ),
-                child: Text(
-                  translate('user_new_screen.create_account_button'),
-                  style: TextStyle(color: Colors.white, fontSize: 25),
-                ),
-              ),
+            ElevatedButton(
+              onPressed: !_signupEnabled ? null : () => signUp(),
+              child: Text(translate('user_new_screen.create_account_button')),
             ),
           ],
         ),
