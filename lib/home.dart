@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:paysnap/licenses.dart';
 import 'package:paysnap/qrcode_creator.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -128,6 +129,9 @@ class _HomePageState extends State<HomePage> {
       case 'about':
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => AboutPage()));
+      case 'licenses':
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => OssLicensesPage()));
       case 'logout':
         await FirebaseAuth.instance.signOut();
         Navigator.of(context)
@@ -158,6 +162,11 @@ class _HomePageState extends State<HomePage> {
                         value: "about",
                         child:
                             Text(translate('home_screen.context_menu.about')),
+                      ),
+                      PopupMenuItem(
+                        value: "licenses",
+                        child: Text(
+                            translate('home_screen.context_menu.licenses')),
                       ),
                       PopupMenuItem(
                         value: "logout",

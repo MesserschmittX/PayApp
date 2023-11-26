@@ -19,6 +19,7 @@
         "context_menu": {
             "settings": "Einstellungen",
             "about": "Über",
+            "licenses": "Lizensen",
             "logout": "Abmelden"
         }
     },
@@ -128,5 +129,8 @@
     "about_screen": {
         "title": "Über",
         "description": "Hier kommt Text: Diese App wurde von Daniel und Kevin entwickelt..."
+    },
+    "license_screen": {
+        "title": "Open Source Lizenzen"
     }
 }
