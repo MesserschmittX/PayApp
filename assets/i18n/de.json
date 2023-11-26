@@ -4,9 +4,10 @@
         "init": "Initializieren"
     },
     "home_screen": {
-        "title": "Pay App",
+        "title": "PaySnap",
         "home": {
-            "scan_qr_code": "QR Code scannen"
+            "scan_qr_code": "QR Code scannen",
+            "create_qr_code": "QR Code erstellen"
         },
         "transactions": {
             "past_transactions": "Bisherige Zahlungen"
@@ -43,6 +44,20 @@
         "scan_qr_code": "Scanne einen QR-Code",
         "notification": {
             "no_permission": "Keine Berechtigung"
+        }
+    },
+    "qr_creator_screen": {
+        "title": "QR-Code Erstellung",
+        "amount_label": "Summe",
+        "amount_hint": "Summe eingeben",
+        "product_label": "Produkt name",
+        "product_hint": "Produkt name eingeben",
+        "create_code_button": "QR-Code erstellen",
+        "error": {
+            "no_user": "Nutzer nicht angemeldet",
+            "invalid_amount": "Ungültige Summe",
+            "product_empty": "Produkt name darf nicht leer sein",
+            "amount_empty": "Summe darf nicht leer sein"
         }
     },
     "settings_screen": {

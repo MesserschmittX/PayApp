@@ -45,6 +45,13 @@ dependencies:
   firebase_core: ^2.23.0
   firebase_auth: ^4.14.1
   settings_ui: ^2.0.2
+  # qr_image_generator: ^0.2.8
+  # forked repo to fix synchronization issue
+  qr_image_generator:
+    git: 
+      url: https://github.com/MesserschmittX/QR-Image-Generator.git
+      ref: main
+  path_provider: ^2.1.1
 
 dev_dependencies:
   flutter_test:

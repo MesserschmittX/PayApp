@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:paysnap/qrcode_creator.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:paysnap/paypal_service.dart';
@@ -145,7 +146,7 @@ class _HomePageState extends State<HomePage> {
           title: Text(translate('home_screen.title')),
           actions: <Widget>[
             PopupMenuButton(
-                icon: Icon(Icons.menu),
+                icon: const Icon(Icons.menu),
                 onSelected: (value) => onSelected(context, value),
                 itemBuilder: (context) => [
                       PopupMenuItem(
@@ -172,7 +173,7 @@ class _HomePageState extends State<HomePage> {
               currentPageIndex = index;
             });
           },
-          indicatorColor: Color.fromARGB(255, 207, 194, 194),
+          indicatorColor: const Color.fromARGB(255, 207, 194, 194),
           selectedIndex: currentPageIndex,
           destinations: <Widget>[
             NavigationDestination(
@@ -190,24 +191,45 @@ class _HomePageState extends State<HomePage> {
           Container(
             color: Color.fromARGB(255, 24, 26, 28),
             alignment: Alignment.center,
-            child: ElevatedButton(
-              child: Text(translate('home_screen.home.scan_qr_code')),
-              style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 163, 157, 157),
-                elevation: 0,
-                alignment: Alignment.center,
-              ),
-              onPressed: () async {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const QRScanner(),
-                ));
-              },
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 15.0, right: 15.0, top: 30, bottom: 10),
+                  child: ElevatedButton(
+                    child: Text(translate('home_screen.home.scan_qr_code')),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 163, 157, 157),
+                      elevation: 0,
+                      alignment: Alignment.center,
+                    ),
+                    onPressed: () async {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const QRScanner(),
+                      ));
+                    },
+                  ),
+                ),
+                ElevatedButton(
+                  child: Text(translate('home_screen.home.create_qr_code')),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(255, 163, 157, 157),
+                    elevation: 0,
+                    alignment: Alignment.center,
+                  ),
+                  onPressed: () async {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const QRCreator(),
+                    ));
+                  },
+                ),
+              ],
             ),
           ),
           Column(
             children: [
-              Text(translate('home_screen.transactions.past_transactions') +
-                  ':'),
+              Text(
+                  '${translate('home_screen.transactions.past_transactions')}:'),
               Text(PaypalService().getTransactions()),
             ],
           ),

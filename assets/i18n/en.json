@@ -4,9 +4,10 @@
         "init": "Initializing"
     },
     "home_screen": {
-        "title": "Pay App",
+        "title": "PaySnap",
         "home": {
-            "scan_qr_code": "Scan QR Code"
+            "scan_qr_code": "Scan QR Code",
+            "create_qr_code": "Create QR Code"
         },
         "transactions": {
             "past_transactions": "Transactions"
@@ -43,6 +44,20 @@
         "scan_qr_code": "Scan a QR-Code",
         "notification": {
             "no_permission": "No permission"
+        }
+    },
+    "qr_creator_screen": {
+        "title": "QR-Code creation",
+        "amount_label": "Amount",
+        "amount_hint": "Enter amount",
+        "product_label": "Product name",
+        "product_hint": "Enter product name",
+        "create_code_button": "Create QR-Code",
+        "error": {
+            "no_user": "User not signed in",
+            "invalid_amount": "Invalid amount",
+            "product_empty": "Product name can not be empty",
+            "amount_empty": "Amount can not be empty"
         }
     },
     "settings_screen": {

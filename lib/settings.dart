@@ -52,7 +52,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void showDemoActionSheet(
+  void showLanguageSwitcher(
       {required BuildContext context, required Widget child}) {
     showCupertinoModalPopup<String>(
         context: context,
@@ -62,7 +62,7 @@ class SettingsPage extends StatelessWidget {
   }
 
   void changeLanguage(BuildContext context) {
-    showDemoActionSheet(
+    showLanguageSwitcher(
       context: context,
       child: CupertinoActionSheet(
         title: Text(translate(
