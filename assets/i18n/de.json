@@ -139,5 +139,16 @@
     },
     "license_screen": {
         "title": "Open Source Lizenzen"
+    },
+    "firebase_exception": {
+        "invalid_email": "Die Email Addresse ist ungültig",
+        "weak_password": "Das Passwort muss mindestens 6 Zeichen lang sein",
+        "wrong_password": "Die Email oder das Passwort ist falsch",
+        "invalid_credential": "Die Email oder das Passwort ist falsch",
+        "email_already_exists": "Die Email Addresse ist bereits registriert",
+        "different_password": "Die neuen Passwörter stimmen nicht überein",
+        "failed_reauth": "Authentifizierung fehlgeschlagen. Bitte melden Sie sich erneut an",
+        "time_out": "Zu viele Anfragen. Bitte versuchen Sie es später erneut",
+        "default": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut"
     }
 }

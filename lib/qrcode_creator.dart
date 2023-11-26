@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:paysnap/styles.dart';
 import 'package:qr_image_generator/qr_image_generator.dart';
 
 class QRCreator extends StatefulWidget {
@@ -60,11 +61,16 @@ class _QRCreatorState extends State<QRCreator> {
             Padding(
               padding: const EdgeInsets.only(
                   left: 15.0, right: 15.0, top: 5, bottom: 10),
-              child: FilledButton(
-                child: Text(translate('qr_creator_screen.create_code_button')),
-                onPressed: () async {
-                  await _createQRCode();
-                },
+              child: SizedBox(
+                height: Styles.buttonHeight,
+                width: Styles.buttonWidth,
+                child: FilledButton(
+                  child:
+                      Text(translate('qr_creator_screen.create_code_button')),
+                  onPressed: () async {
+                    await _createQRCode();
+                  },
+                ),
               ),
             ),
             _buildQrView(),

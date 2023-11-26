@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 enum AuthStatus {
   successful,
   wrongPassword,
+  invalidCredential,
   emailAlreadyExists,
   invalidEmail,
   weakPassword,
@@ -24,6 +26,9 @@ class AuthExceptionHandler {
       case "wrong-password":
         status = AuthStatus.wrongPassword;
         break;
+      case "invalid-credential":
+        status = AuthStatus.invalidCredential;
+        break;
       case "weak-password":
         status = AuthStatus.weakPassword;
         break;
@@ -44,28 +49,29 @@ class AuthExceptionHandler {
     String errorMessage;
     switch (error) {
       case AuthStatus.invalidEmail:
-        errorMessage = "Your email address appears to be malformed.";
+        errorMessage = translate('firebase_exception.invalid_email');
         break;
       case AuthStatus.weakPassword:
-        errorMessage = "Your password should be at least 6 characters.";
+        errorMessage = translate('firebase_exception.weak_password');
         break;
       case AuthStatus.wrongPassword:
-        errorMessage = "Your email or password is wrong.";
+        errorMessage = translate('firebase_exception.wrong_password');
+        break;
+      case AuthStatus.invalidCredential:
+        errorMessage = translate('firebase_exception.invalid_credential');
         break;
       case AuthStatus.emailAlreadyExists:
-        errorMessage =
-            "The email address is already in use by another account.";
+        errorMessage = translate('firebase_exception.email_already_exists');
         break;
       case AuthStatus.differentPassword:
-        errorMessage = "The new passwords do not match.";
+        errorMessage = translate('firebase_exception.different_password');
         break;
       case AuthStatus.failedReauth:
-        errorMessage = "Failed authentication with current credentials.";
+        errorMessage = translate('firebase_exception.failed_reauth');
       case AuthStatus.timeOut:
-        errorMessage =
-            "Too many requests. Try again later or press forgot password.";
+        errorMessage = translate('firebase_exception.time_out');
       default:
-        errorMessage = "An error occured. Please try again later.";
+        errorMessage = translate('firebase_exception.default');
     }
     return errorMessage;
   }

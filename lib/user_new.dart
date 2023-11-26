@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:paysnap/styles.dart';
 import 'home.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -53,7 +54,7 @@ class _UserNewState extends State<UserNew> {
         _error_signUp = translate('user_new_screen.error.sign_up');
       }
       final snackBar = SnackBar(
-        content: Text(e.code),
+        content: Text(_error_signUp),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } catch (e) {
@@ -77,10 +78,10 @@ class _UserNewState extends State<UserNew> {
             Padding(
               padding: const EdgeInsets.only(top: 60.0),
               child: Center(
-                child: Container(
+                child: SizedBox(
                     width: 200,
                     height: 150,
-                    child: Image.asset('assets/images/paysnap.jpeg')),
+                    child: Image.asset('assets/images/paysnap.png')),
               ),
             ),
             Padding(
@@ -113,9 +114,13 @@ class _UserNewState extends State<UserNew> {
                     hintText: translate('user_new_screen.password_hint')),
               ),
             ),
-            ElevatedButton(
-              onPressed: !_signupEnabled ? null : () => signUp(),
-              child: Text(translate('user_new_screen.create_account_button')),
+            SizedBox(
+              height: Styles.buttonHeight,
+              width: Styles.buttonWidth,
+              child: FilledButton(
+                onPressed: !_signupEnabled ? null : () => signUp(),
+                child: Text(translate('user_new_screen.create_account_button')),
+              ),
             ),
           ],
         ),

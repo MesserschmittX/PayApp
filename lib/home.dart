@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:paysnap/licenses.dart';
 import 'package:paysnap/qrcode_creator.dart';
+import 'package:paysnap/styles.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:paysnap/paypal_service.dart';
@@ -146,7 +147,7 @@ class _HomePageState extends State<HomePage> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          leading: Image.asset('assets/images/paysnap.jpeg'),
+          leading: Image.asset('assets/images/paysnap.png'),
           title: Text(translate('home_screen.title')),
           actions: <Widget>[
             PopupMenuButton(
@@ -196,13 +197,13 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         body: <Widget>[
-          Container(
-            alignment: Alignment.center,
+          Center(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 15.0, right: 15.0, top: 30, bottom: 10),
+                Container(
+                  margin: const EdgeInsets.only(top: 150.0),
+                  height: Styles.buttonHeight,
+                  width: Styles.buttonWidth,
                   child: FilledButton(
                     child: Text(translate('home_screen.home.scan_qr_code')),
                     onPressed: () async {
@@ -212,13 +213,18 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
-                FilledButton(
-                  child: Text(translate('home_screen.home.create_qr_code')),
-                  onPressed: () async {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const QRCreator(),
-                    ));
-                  },
+                Container(
+                  margin: const EdgeInsets.only(top: 15.0),
+                  height: Styles.buttonHeight,
+                  width: Styles.buttonWidth,
+                  child: FilledButton(
+                    child: Text(translate('home_screen.home.create_qr_code')),
+                    onPressed: () async {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const QRCreator(),
+                      ));
+                    },
+                  ),
                 ),
               ],
             ),

@@ -139,5 +139,16 @@
     },
     "license_screen": {
         "title": "Open Source Licenses"
+    },
+    "firebase_exception": {
+        "invalid_email": "Your email address appears to be malformed",
+        "weak_password": "Your password should be at least 6 characters",
+        "wrong_password": "Your email or password is wrong",
+        "invalid_credential": "Your email or password is wrong",
+        "email_already_exists": "The email address is already in use by another account",
+        "different_password": "The new passwords do not match",
+        "failed_reauth": "Failed authentication with current credentials",
+        "time_out": "Too many requests. Try again later or press forgot password",
+        "default": "An error occurred. Please try again later"
     }
 }

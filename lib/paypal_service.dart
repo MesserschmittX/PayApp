@@ -50,7 +50,7 @@ class PaypalService {
       returnUrl: "com.payment.paysnap://paypalpay",
       //client id from developer dashboard
       clientID:
-          "AdMa4WtIendZju-VBwvie0cHQKSr5v7yYnIn10RGBVlTjuVDQocWKSdNOE2csieQ1Xg2QxP8DiM-w81B",
+          "AWU5P1hIhIrLzXwI3hIeT4OO52gCls-GH483l-tnPNPNw1hZR9oA4UhUJNlWZhX-juCrddTi8nlewzaO",
       //sandbox, staging, live etc
       payPalEnvironment: FPayPalEnvironment.sandbox,
       //what currency do you plan to use?

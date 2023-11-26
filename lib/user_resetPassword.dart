@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:paysnap/styles.dart';
 import 'login.dart';
 import 'firebase_exceptions.dart';
 
@@ -45,10 +46,10 @@ class _UserResetPasswordState extends State<UserResetPassword> {
             Padding(
               padding: const EdgeInsets.only(top: 60.0),
               child: Center(
-                child: Container(
+                child: SizedBox(
                     width: 200,
                     height: 150,
-                    child: Image.asset('assets/images/paysnap.jpeg')),
+                    child: Image.asset('assets/images/paysnap.png')),
               ),
             ),
             Padding(
@@ -68,10 +69,10 @@ class _UserResetPasswordState extends State<UserResetPassword> {
                         translate('user_resetPassword_screen.email_hint')),
               ),
             ),
-            Container(
-              height: 50,
-              width: 250,
-              child: ElevatedButton(
+            SizedBox(
+              height: Styles.buttonHeight,
+              width: Styles.buttonWidth,
+              child: FilledButton(
                 onPressed: !_resetEnabled
                     ? null
                     : () async {
@@ -86,11 +87,11 @@ class _UserResetPasswordState extends State<UserResetPassword> {
                               ),
                             );
                           } else {
-                            final _error =
+                            final error =
                                 AuthExceptionHandler.generateErrorMessage(
                                     _status);
                             final snackBar = SnackBar(
-                              content: Text(_error),
+                              content: Text(error),
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);

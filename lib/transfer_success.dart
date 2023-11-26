@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:paysnap/styles.dart';
 
 import 'home.dart';
 
@@ -28,8 +29,8 @@ class SuccessPage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 200,
-              height: 50,
+              height: Styles.buttonHeight,
+              width: Styles.buttonWidth,
               child: FilledButton(
                 child: Text(translate("transfer_success_screen.close_button")),
                 onPressed: () {

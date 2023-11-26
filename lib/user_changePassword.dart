@@ -184,9 +184,9 @@ class _UserChangePasswordState extends State<UserChangePassword> {
             ),
             TextButton(
               onPressed: () async {
-                final _status = await resetPassword(
+                final status0 = await resetPassword(
                     mail: auth.currentUser!.email.toString());
-                if (_status == AuthStatus.successful) {
+                if (status0 == AuthStatus.successful) {
                   await FirebaseAuth.instance.signOut();
                   Navigator.pushReplacement(
                     context,
@@ -200,10 +200,10 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 } else {
-                  final _error =
-                      AuthExceptionHandler.generateErrorMessage(_status);
+                  final error =
+                      AuthExceptionHandler.generateErrorMessage(status0);
                   final snackBar = SnackBar(
-                    content: Text(_error),
+                    content: Text(error),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
@@ -213,18 +213,18 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                 style: Styles.linkText,
               ),
             ),
-            Container(
-              height: 50,
-              width: 250,
-              child: ElevatedButton(
+            SizedBox(
+              height: Styles.buttonHeight,
+              width: Styles.buttonWidth,
+              child: FilledButton(
                 onPressed: !_changeEnabled
                     ? null
                     : () async {
-                        final _status = await changePassword(
+                        final status = await changePassword(
                             passwordOld: passwordOldController.text,
                             passwordNew1: passwordNew1Controller.text,
                             passwordNew2: passwordNew2Controller.text);
-                        if (_status == AuthStatus.successful) {
+                        if (status == AuthStatus.successful) {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -233,8 +233,7 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                           );
                         } else {
                           final _error =
-                              AuthExceptionHandler.generateErrorMessage(
-                                  _status);
+                              AuthExceptionHandler.generateErrorMessage(status);
                           final snackBar = SnackBar(
                             content: Text(_error),
                           );

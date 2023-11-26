@@ -53,12 +53,12 @@ class _LoginState extends State<Login> {
         );
       }
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
+      if (e.code == 'invalid-credential') {
         _error_signIn = translate('login_screen.error.invalid_credentials');
       } else if (e.code == 'invalid-email') {
         _error_signIn = translate('login_screen.error.invalid_email');
       } else {
-        _error_signIn = translate('login_screen.sign_in');
+        _error_signIn = translate('login_screen.error.sign_in');
       }
       final snackBar = SnackBar(
         content: Text(_error_signIn),
@@ -88,10 +88,10 @@ class _LoginState extends State<Login> {
               Padding(
                 padding: const EdgeInsets.only(top: 60.0),
                 child: Center(
-                  child: Container(
+                  child: SizedBox(
                       width: 200,
                       height: 150,
-                      child: Image.asset('assets/images/paysnap.jpeg')),
+                      child: Image.asset('assets/images/paysnap.png')),
                 ),
               ),
               Padding(
@@ -147,10 +147,10 @@ class _LoginState extends State<Login> {
                   style: Styles.linkText,
                 ),
               ),
-              Container(
-                height: 50,
-                width: 250,
-                child: ElevatedButton(
+              SizedBox(
+                height: Styles.buttonHeight,
+                width: Styles.buttonWidth,
+                child: FilledButton(
                   onPressed: !_loginEnabled ? null : () => signIn(),
                   child: Text(translate('login_screen.login_button')),
                 ),

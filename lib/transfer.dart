@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:paysnap/home.dart';
 import 'package:paysnap/paypal_service.dart';
+import 'package:paysnap/styles.dart';
 
 import 'transfer_data.dart';
 import 'transfer_success.dart';
@@ -66,27 +67,36 @@ class TransferPage extends StatelessWidget {
                 ],
               ),
             ),
-            FilledButton(
-              child: Text(translate("transfer_screen.transfer_button")),
-              onPressed: () {
-                PaypalService().makePayment(
-                    transferData.amount,
-                    (String msg) => {
-                          if (msg.startsWith("Order successful") ||
-                              msg.startsWith("shipping change"))
-                            {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => SuccessPage()))
-                            }
-                        });
-              },
+            SizedBox(
+              height: Styles.buttonHeight,
+              width: Styles.buttonWidth,
+              child: FilledButton(
+                child: Text(translate("transfer_screen.transfer_button")),
+                onPressed: () {
+                  PaypalService().makePayment(
+                      transferData.amount,
+                      (String msg) => {
+                            if (msg.startsWith("Order successful") ||
+                                msg.startsWith("shipping change"))
+                              {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => SuccessPage()))
+                              }
+                          });
+                },
+              ),
             ),
-            ElevatedButton(
-              child: Text(translate("transfer_screen.cancel_button")),
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => HomePage()));
-              },
+            Container(
+              margin: const EdgeInsets.only(top: 15),
+              height: Styles.buttonHeight,
+              width: Styles.buttonWidth,
+              child: ElevatedButton(
+                child: Text(translate("transfer_screen.cancel_button")),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const HomePage()));
+                },
+              ),
             ),
           ]),
         ),
