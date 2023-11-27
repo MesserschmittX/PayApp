@@ -161,9 +161,6 @@ class LoginState extends State<Login> {
                   child: Text(translate('login_screen.login_button')),
                 ),
               ),
-              const SizedBox(
-                height: 130,
-              ),
               TextButton(
                 onPressed: () {
                   Navigator.push(context,

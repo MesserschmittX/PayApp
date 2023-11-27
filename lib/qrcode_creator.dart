@@ -10,7 +10,7 @@ import 'package:printing/printing.dart';
 import 'package:qr_image_generator/qr_image_generator.dart';
 
 class QRCreator extends StatefulWidget {
-  const QRCreator({Key? key}) : super(key: key);
+  const QRCreator({super.key});
 
   @override
   State<StatefulWidget> createState() => _QRCreatorState();

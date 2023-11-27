@@ -10,7 +10,9 @@
             "create_qr_code": "QR-Code erstellen"
         },
         "transactions": {
-            "past_transactions": "Bisherige Zahlungen"
+            "past_transactions": "Bisherige Zahlungen",
+            "error_loading_data": "Fehler beim Laden der Daten",
+            "no_transaction_history": "Keine Zahlungshistorie vorhanden"
         },
         "navigation": {
             "home": "Home",

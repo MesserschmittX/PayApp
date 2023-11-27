@@ -12,7 +12,7 @@ import 'payment_success.dart';
 class PaymentPage extends StatelessWidget {
   final PaymentData paymentData;
   PaymentPage(this.paymentData, {super.key});
-  FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -92,12 +92,12 @@ class PaymentPage extends StatelessWidget {
                                   "amount": paymentData.amount,
                                   "product": paymentData.product,
                                 }).then((_) {
-                                  print("data saved to firestore");
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => SuccessPage()));
+                                      builder: (context) =>
+                                          const SuccessPage()));
                                 }).catchError((_) {
-                                  print(
-                                      "an error occured while saving data to firestore");
+                                  debugPrint(
+                                      "an error occurred while saving data to firestore");
                                 }),
                               }
                           });

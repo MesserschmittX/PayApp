@@ -9,7 +9,6 @@ import 'package:paysnap/qrcode_creator.dart';
 import 'package:paysnap/styles.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:paysnap/paypal_service.dart';
 
 import 'settings.dart';
 import 'about.dart';
@@ -54,7 +53,7 @@ class _HomePageState extends State<HomePage> {
 
     List<Map<String, dynamic>> payments = [];
 
-    querySnapshot.docs.forEach((doc) {
+    querySnapshot.docs.map((doc) {
       payments.add(doc.data() as Map<String, dynamic>);
     });
 
@@ -214,15 +213,15 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            Divider(),
+            const Divider(),
             Expanded(
               child: FutureBuilder(
                 future: paymentHistory,
                 builder: (context,
                     AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: Container(
+                    return const Center(
+                      child: SizedBox(
                         height: 50.0,
                         width: 50.0,
                         child: CircularProgressIndicator(),
@@ -230,22 +229,21 @@ class _HomePageState extends State<HomePage> {
                     );
                   } else if (snapshot.hasError) {
                     return Text(
-                        'Fehler beim Laden der Daten: ${snapshot.error}');
+                        '${translate('home_screen.transactions.error_loading_data')}: ${snapshot.error}');
                   } else if (snapshot.data!.isEmpty) {
-                    return Text('Keine Zahlungshistorie vorhanden.');
+                    return Text(translate(
+                        'home_screen.transactions.no_transaction_history'));
                   } else {
-                    print(snapshot.data!.length);
-                    print(snapshot.data!);
                     return ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
-                        Timestamp _timestamp =
+                        Timestamp timestamp =
                             snapshot.data![index]['timestamp'];
                         return Card(
                             child: Column(
                           children: [
                             ListTile(
-                                leading: Icon(Icons.paid),
+                                leading: const Icon(Icons.paid),
                                 title: Text(
                                   'Receiver: ${snapshot.data![index]['receiver']}',
                                   style: const TextStyle(
@@ -254,12 +252,12 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 subtitle: Row(children: <Widget>[
                                   Text(
-                                    '${_timestamp.toDate().day}.${_timestamp.toDate().month}.${_timestamp.toDate().year}',
-                                    style: TextStyle(fontSize: 20),
+                                    '${timestamp.toDate().day}.${timestamp.toDate().month}.${timestamp.toDate().year}',
+                                    style: const TextStyle(fontSize: 20),
                                   ),
                                   Text(
                                     '/ - ${snapshot.data![index]['amount']} €',
-                                    style: TextStyle(fontSize: 20),
+                                    style: const TextStyle(fontSize: 20),
                                   ),
                                 ])),
                           ],
