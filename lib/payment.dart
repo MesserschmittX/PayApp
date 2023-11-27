@@ -3,13 +3,16 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:paysnap/home.dart';
 import 'package:paysnap/paypal_service.dart';
 import 'package:paysnap/styles.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'payment_data.dart';
 import 'payment_success.dart';
 
 class PaymentPage extends StatelessWidget {
   final PaymentData paymentData;
-  const PaymentPage(this.paymentData, {super.key});
+  PaymentPage(this.paymentData, {super.key});
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -33,7 +36,7 @@ class PaymentPage extends StatelessWidget {
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(paymentData.product),
+                    child: Text(paymentData.uid),
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -80,8 +83,22 @@ class PaymentPage extends StatelessWidget {
                             if (msg.startsWith("Order successful") ||
                                 msg.startsWith("shipping change"))
                               {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const SuccessPage()))
+                                FirebaseFirestore.instance
+                                    .collection(
+                                        "/transfer/${auth.currentUser!.uid}/history")
+                                    .add({
+                                  "receiver": paymentData.uid,
+                                  "sender": auth.currentUser!.uid,
+                                  "amount": paymentData.amount,
+                                  "product": paymentData.product,
+                                }).then((_) {
+                                  print("data saved to firestore");
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => SuccessPage()));
+                                }).catchError((_) {
+                                  print(
+                                      "an error occured while saving data to firestore");
+                                }),
                               }
                           });
                 },

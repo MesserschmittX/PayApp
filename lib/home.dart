@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:paysnap/licenses.dart';
@@ -28,17 +29,36 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
+
+  FirebaseAuth auth = FirebaseAuth.instance;
   Uri? _incomingURI;
   Map<String, String> _uriQuery = {};
   String _uid = '';
   String _product = '';
   double _amount = 0.0;
 
+  late Future<List<Map<String, dynamic>>> paymentHistory;
+
   @override
   void initState() {
     super.initState();
     _initURIHandler();
     _incomingLinkHandler();
+    paymentHistory = getPaymentHistory(auth.currentUser!.uid);
+  }
+
+  Future<List<Map<String, dynamic>>> getPaymentHistory(String uid) async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('/transfer/kevin112/history')
+        .get();
+
+    List<Map<String, dynamic>> payments = [];
+
+    querySnapshot.docs.forEach((doc) {
+      payments.add(doc.data() as Map<String, dynamic>);
+    });
+
+    return payments;
   }
 
   Future<void> _initURIHandler() async {
@@ -166,70 +186,92 @@ class _HomePageState extends State<HomePage> {
                     ])
           ],
         ),
-        bottomNavigationBar: NavigationBar(
-          onDestinationSelected: (int index) {
-            setState(() {
-              currentPageIndex = index;
-            });
-          },
-          selectedIndex: currentPageIndex,
-          destinations: <Widget>[
-            NavigationDestination(
-              selectedIcon: const Icon(Icons.home),
-              icon: const Icon(Icons.home_outlined),
-              label: translate('home_screen.navigation.home'),
+        body: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 15.0),
+              height: Styles.buttonHeight,
+              width: Styles.buttonWidth,
+              child: FilledButton(
+                child: Text(translate('home_screen.home.scan_qr_code')),
+                onPressed: () async {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const QRScanner(),
+                  ));
+                },
+              ),
             ),
-            NavigationDestination(
-              icon: const Icon(Icons.business),
-              label: translate('home_screen.navigation.transactions'),
+            Container(
+              margin: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+              height: Styles.buttonHeight,
+              width: Styles.buttonWidth,
+              child: FilledButton(
+                child: Text(translate('home_screen.home.create_qr_code')),
+                onPressed: () async {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const QRCreator(),
+                  ));
+                },
+              ),
+            ),
+            Divider(),
+            Expanded(
+              child: FutureBuilder(
+                future: paymentHistory,
+                builder: (context,
+                    AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: Container(
+                        height: 50.0,
+                        width: 50.0,
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text(
+                        'Fehler beim Laden der Daten: ${snapshot.error}');
+                  } else if (snapshot.data!.isEmpty) {
+                    return Text('Keine Zahlungshistorie vorhanden.');
+                  } else {
+                    print(snapshot.data!.length);
+                    print(snapshot.data!);
+                    return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        Timestamp _timestamp =
+                            snapshot.data![index]['timestamp'];
+                        return Card(
+                            child: Column(
+                          children: [
+                            ListTile(
+                                leading: Icon(Icons.paid),
+                                title: Text(
+                                  'Receiver: ${snapshot.data![index]['receiver']}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                                subtitle: Row(children: <Widget>[
+                                  Text(
+                                    '${_timestamp.toDate().day}.${_timestamp.toDate().month}.${_timestamp.toDate().year}',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  Text(
+                                    '/ - ${snapshot.data![index]['amount']} €',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ])),
+                          ],
+                        ));
+                      },
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),
-        body: <Widget>[
-          Center(
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 150.0),
-                  height: Styles.buttonHeight,
-                  width: Styles.buttonWidth,
-                  child: FilledButton(
-                    child: Text(translate('home_screen.home.scan_qr_code')),
-                    onPressed: () async {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const QRScanner(),
-                      ));
-                    },
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 15.0),
-                  height: Styles.buttonHeight,
-                  width: Styles.buttonWidth,
-                  child: FilledButton(
-                    child: Text(translate('home_screen.home.create_qr_code')),
-                    onPressed: () async {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const QRCreator(),
-                      ));
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Column(
-            children: [
-              Text(
-                  '${translate('home_screen.transactions.past_transactions')}:'),
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0),
-                child: Text(PaypalService().getTransactions()),
-              ),
-            ],
-          ),
-        ][currentPageIndex],
       ),
     );
   }

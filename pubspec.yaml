@@ -54,6 +54,7 @@ dependencies:
   path_provider: ^2.1.1
   printing: ^5.11.1
   pdf: ^3.10.6
+  cloud_firestore: ^4.13.2
 
 dev_dependencies:
   flutter_test:
