@@ -154,12 +154,13 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           leading: Image.asset('assets/images/paysnap.png'),
           title: Text(translate('home_screen.title')),
+          backgroundColor: Styles.secondaryColor,
           actions: <Widget>[
             PopupMenuButton(
                 icon: const Icon(Icons.menu),
                 onSelected: (value) => onSelected(
                     value,
-                    (StatelessWidget widget) => Navigator.of(context)
+                    (Widget widget) => Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) => widget))),
                 itemBuilder: (context) => [
                       PopupMenuItem(

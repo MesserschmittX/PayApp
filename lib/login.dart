@@ -97,7 +97,8 @@ class LoginState extends State<Login> {
                   child: SizedBox(
                       width: 200,
                       height: 150,
-                      child: Image.asset('assets/images/paysnap.png')),
+                      child:
+                          Image.asset('assets/images/paysnap_loginLogo.png')),
                 ),
               ),
               Padding(
@@ -115,7 +116,7 @@ class LoginState extends State<Login> {
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 15.0, right: 15.0, top: 15, bottom: 30),
+                    left: 15.0, right: 15.0, top: 15.0, bottom: 15.0),
                 child: TextField(
                   controller: passwordController,
                   obscureText: _passwordVisible,
@@ -141,24 +142,33 @@ class LoginState extends State<Login> {
                   ),
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const UserResetPassword()));
-                },
-                child: Text(
-                  translate('login_screen.forgot_password_button'),
-                  style: Styles.linkText,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const UserResetPassword()));
+                    },
+                    child: Text(
+                      translate('login_screen.forgot_password_button'),
+                      style: Styles.linkText,
+                    ),
+                  ),
                 ),
               ),
-              SizedBox(
-                height: Styles.buttonHeight,
-                width: Styles.buttonWidth,
-                child: FilledButton(
-                  onPressed: !_loginEnabled ? null : () => signIn(),
-                  child: Text(translate('login_screen.login_button')),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 60),
+                child: SizedBox(
+                  height: Styles.buttonHeight,
+                  width: Styles.buttonWidth,
+                  child: FilledButton(
+                    onPressed: !_loginEnabled ? null : () => signIn(),
+                    child: Text(translate('login_screen.login_button')),
+                  ),
                 ),
               ),
               TextButton(

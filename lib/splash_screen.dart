@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paysnap/styles.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -6,12 +7,27 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+        child: Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Styles.primaryColor,
+          Colors.cyanAccent,
+        ],
+      )),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset('assets/images/paysnap.png'),
+          Center(
+            child: SizedBox(
+                width: 250,
+                height: 200,
+                child: Image.asset('assets/images/paysnap_loginLogo.png')),
+          ),
         ],
       ),
-    );
+    ));
   }
 }

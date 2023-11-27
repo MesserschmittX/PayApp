@@ -24,7 +24,7 @@ class SettingsPage extends StatelessWidget {
             title: Text(translate('settings_screen.general_settings.title')),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
-                leading: const Icon(Icons.language),
+                leading: const Icon(Icons.language, color: Styles.primaryColor),
                 title: Text(translate(
                     'settings_screen.general_settings.language_setting.name')),
                 value: Text(translate('current_language')),
@@ -32,8 +32,8 @@ class SettingsPage extends StatelessWidget {
               ),
               SettingsTile.navigation(
                 leading: darkMode
-                    ? const Icon(Icons.dark_mode)
-                    : const Icon(Icons.light_mode),
+                    ? const Icon(Icons.dark_mode, color: Styles.primaryColor)
+                    : const Icon(Icons.light_mode, color: Styles.primaryColor),
                 title: Text(translate(
                     'settings_screen.general_settings.dark_mode_setting.name')),
                 value: Text(darkMode
@@ -49,7 +49,7 @@ class SettingsPage extends StatelessWidget {
             title: Text(translate('settings_screen.account_settings.title')),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
-                leading: const Icon(Icons.password),
+                leading: const Icon(Icons.password, color: Styles.primaryColor),
                 title: Text(translate(
                     'settings_screen.account_settings.change_password')),
                 onPressed: (context) async => Navigator.of(context).push(
@@ -57,7 +57,7 @@ class SettingsPage extends StatelessWidget {
                         builder: (context) => const UserChangePassword())),
               ),
               SettingsTile.navigation(
-                leading: const Icon(Icons.logout),
+                leading: const Icon(Icons.logout, color: Styles.primaryColor),
                 title:
                     Text(translate('settings_screen.account_settings.logout')),
                 onPressed: (context) async => logout(() => Navigator.of(context)
