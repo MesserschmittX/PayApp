@@ -20,6 +20,7 @@ class _QRCreatorState extends State<QRCreator> {
   Uint8List? qrBytes;
   final amountController = TextEditingController();
   final productController = TextEditingController();
+  bool _createEnabled = false;
 
   @override
   void initState() {
@@ -37,8 +38,12 @@ class _QRCreatorState extends State<QRCreator> {
               padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 10),
               child: TextField(
                 maxLength: 7,
-                keyboardType: TextInputType.number,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 controller: amountController,
+                onChanged: (value) {
+                  updateCreateState();
+                },
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     suffixIcon: const Icon(Icons.euro),
@@ -51,6 +56,9 @@ class _QRCreatorState extends State<QRCreator> {
               child: TextField(
                 maxLength: 50,
                 controller: productController,
+                onChanged: (value) {
+                  updateCreateState();
+                },
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: translate('qr_creator_screen.product_label'),
@@ -67,9 +75,9 @@ class _QRCreatorState extends State<QRCreator> {
                 child: FilledButton(
                   child:
                       Text(translate('qr_creator_screen.create_code_button')),
-                  onPressed: () async {
-                    await _createQRCode();
-                  },
+                  onPressed: !_createEnabled
+                      ? null
+                      : () async => await _createQRCode(),
                 ),
               ),
             ),
@@ -110,23 +118,15 @@ class _QRCreatorState extends State<QRCreator> {
 
   String? _validateInput() {
     User? user = FirebaseAuth.instance.currentUser;
-    double? amount = double.tryParse(amountController.text);
-    String product = productController.text;
+    String amountInput_formatted = amountController.text.replaceAll(',', '.');
+    double? amount = double.tryParse(amountInput_formatted);
 
     if (user == null) {
       return translate('qr_creator_screen.error.no_user');
     }
 
-    if (amountController.text.isEmpty) {
-      return translate('qr_creator_screen.error.amount_empty');
-    }
-
     if (amount == null) {
       return translate('qr_creator_screen.error.invalid_amount');
-    }
-
-    if (product.isEmpty) {
-      return translate('qr_creator_screen.error.product_empty');
     }
     return null;
   }
@@ -225,5 +225,13 @@ class _QRCreatorState extends State<QRCreator> {
     amountController.dispose();
     productController.dispose();
     super.dispose();
+  }
+
+  void updateCreateState() {
+    setState(() {
+      // Update button state based on input fields
+      _createEnabled =
+          amountController.text.isNotEmpty && productController.text.isNotEmpty;
+    });
   }
 }
