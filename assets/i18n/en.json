@@ -6,8 +6,8 @@
     "home_screen": {
         "title": "PaySnap",
         "home": {
-            "scan_qr_code": "Scan QR Code",
-            "create_qr_code": "Create QR Code"
+            "scan_qr_code": "Scan QR-Code",
+            "create_qr_code": "Create QR-Code"
         },
         "transactions": {
             "past_transactions": "Transactions"
@@ -40,10 +40,10 @@
     },
     "qr_scanner_screen": {
         "title": "QR-Code scanner",
-        "wrong_qr_format": "Wrong QR-Code format",
-        "wrong_qr_content": "Wrong QR-Code content",
         "scan_qr_code": "Scan a QR-Code",
         "notification": {
+            "wrong_code_format": "Wrong Code format, try a QR-Code",
+            "wrong_qr_content": "Wrong QR-Code content, try different code",
             "no_permission": "No permission"
         }
     },
@@ -54,6 +54,7 @@
         "product_label": "Product name",
         "product_hint": "Enter product name",
         "create_code_button": "Create QR-Code",
+        "print_code_button": "Print QR-Code",
         "error": {
             "no_user": "User not signed in",
             "invalid_amount": "Invalid amount",
@@ -92,15 +93,15 @@
             "logout": "Logout"
         }
     },
-    "transfer_screen": {
-        "title": "Transfer",
+    "payment_screen": {
+        "title": "Payment",
         "description": "Description",
         "recipient": "Recipient",
-        "transfer_button": "Transfer now",
+        "payment_button": "Pay now",
         "cancel_button": "Cancel"
     },
-    "transfer_success_screen": {
-        "title": "Transfer success",
+    "payment_success_screen": {
+        "title": "Payment success",
         "close_button": "Close"
     },
     "user_new_screen": {
@@ -135,7 +136,7 @@
     },
     "about_screen": {
         "title": "About",
-        "description": "Hier kommt Text: Diese App wurde von Daniel und Kevin entwickelt..."
+        "description": "App was developed by Daniel and Kevin"
     },
     "license_screen": {
         "title": "Open Source Licenses"
@@ -147,7 +148,7 @@
         "invalid_credential": "Your email or password is wrong",
         "email_already_exists": "The email address is already in use by another account",
         "different_password": "The new passwords do not match",
-        "failed_reauth": "Failed authentication with current credentials",
+        "failed_re_auth": "Failed authentication with current credentials",
         "time_out": "Too many requests. Try again later or press forgot password",
         "default": "An error occurred. Please try again later"
     }

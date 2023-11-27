@@ -6,17 +6,19 @@ import 'home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserNew extends StatefulWidget {
+  const UserNew({super.key});
+
   @override
-  _UserNewState createState() => _UserNewState();
+  UserNewState createState() => UserNewState();
 }
 
-class _UserNewState extends State<UserNew> {
+class UserNewState extends State<UserNew> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   final mailController = TextEditingController();
   final passwordController = TextEditingController();
-  String _error_signUp = '';
-  bool _signupEnabled = false;
+  String _signUpError = '';
+  bool _signUpEnabled = false;
 
   @override
   void dispose() {
@@ -28,41 +30,43 @@ class _UserNewState extends State<UserNew> {
 
   // Sign in
   Future<void> signUp() async {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    navigateToPage(Widget page) => Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => page,
+          ),
+        );
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: mailController.text,
         password: passwordController.text,
       );
 
-      // Sign up successfull -> navigate to home page
+      // Sign up successful -> navigate to home page
       if (userCredential.user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage(),
-          ),
-        );
+        navigateToPage(const HomePage());
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        _error_signUp = translate('user_new_screen.error.password_to_weak');
+        _signUpError = translate('user_new_screen.error.password_to_weak');
       } else if (e.code == 'email-already-in-use') {
-        _error_signUp = translate('user_new_screen.error.already_exists');
+        _signUpError = translate('user_new_screen.error.already_exists');
       } else if (e.code == 'invalid-email') {
-        _error_signUp = translate('user_new_screen.error.invalid_email');
+        _signUpError = translate('user_new_screen.error.invalid_email');
       } else {
-        _error_signUp = translate('user_new_screen.error.sign_up');
+        _signUpError = translate('user_new_screen.error.sign_up');
       }
       final snackBar = SnackBar(
-        content: Text(_error_signUp),
+        content: Text(_signUpError),
       );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      scaffoldMessenger.showSnackBar(snackBar);
     } catch (e) {
-      _error_signUp = translate('user_new_screen.error.sign_up');
+      _signUpError = translate('user_new_screen.error.sign_up');
       final snackBar = SnackBar(
-        content: Text(_error_signUp),
+        content: Text(_signUpError),
       );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      scaffoldMessenger.showSnackBar(snackBar);
     }
   }
 
@@ -90,7 +94,7 @@ class _UserNewState extends State<UserNew> {
               child: TextField(
                 controller: mailController,
                 onChanged: (value) {
-                  updateSignupState();
+                  updateSignUpState();
                 },
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
@@ -105,7 +109,7 @@ class _UserNewState extends State<UserNew> {
               child: TextField(
                 controller: passwordController,
                 onChanged: (value) {
-                  updateSignupState();
+                  updateSignUpState();
                 },
                 obscureText: true,
                 decoration: InputDecoration(
@@ -118,7 +122,7 @@ class _UserNewState extends State<UserNew> {
               height: Styles.buttonHeight,
               width: Styles.buttonWidth,
               child: FilledButton(
-                onPressed: !_signupEnabled ? null : () => signUp(),
+                onPressed: !_signUpEnabled ? null : () => signUp(),
                 child: Text(translate('user_new_screen.create_account_button')),
               ),
             ),
@@ -128,10 +132,10 @@ class _UserNewState extends State<UserNew> {
     );
   }
 
-  void updateSignupState() {
+  void updateSignUpState() {
     setState(() {
-      // Aktualisiere den Zustand des Buttons basierend auf der Eingabe in beiden Feldern
-      _signupEnabled =
+      // Update button state based on input fields
+      _signUpEnabled =
           mailController.text.isNotEmpty && passwordController.text.isNotEmpty;
     });
   }

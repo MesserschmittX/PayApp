@@ -5,9 +5,12 @@ import 'package:paysnap/styles.dart';
 import 'home.dart';
 
 class SuccessPage extends StatelessWidget {
+  const SuccessPage({super.key});
+
+  @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text(translate("transfer_success_screen.title")),
+          title: Text(translate("payment_success_screen.title")),
           automaticallyImplyLeading: false,
         ),
         body: Container(
@@ -32,10 +35,10 @@ class SuccessPage extends StatelessWidget {
               height: Styles.buttonHeight,
               width: Styles.buttonWidth,
               child: FilledButton(
-                child: Text(translate("transfer_success_screen.close_button")),
+                child: Text(translate("payment_success_screen.close_button")),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const HomePage()));
                 },
               ),
             ),

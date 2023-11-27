@@ -5,26 +5,30 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'dart:convert';
 
-import 'package:paysnap/main.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    /*await tester.pumpWidget(MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);*/
+    // check translations for missing keys
+    var de = jsonDecode(await rootBundle.loadString('assets/i18n/de.json'));
+    var en = jsonDecode(await rootBundle.loadString('assets/i18n/en.json'));
+    int counter = 0;
+    counter = checkRecursiveMap(de, en, counter);
   });
+}
+
+int checkRecursiveMap(
+    Map<String, dynamic> map, Map<String, dynamic> map2, int counter) {
+  map.forEach((key, value) {
+    counter++;
+    expect(map2.containsKey(key), true);
+    if (value is Map<String, dynamic>) {
+      // Recursive call
+      counter = checkRecursiveMap(map[key], map2[key], counter);
+    }
+  });
+  return counter;
 }

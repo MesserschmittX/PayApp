@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -18,7 +17,8 @@ class _QRScannerState extends State<QRScanner> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  bool disposed = false;
+  bool _isDisposed = false;
+  bool _isSnackbarActive = false;
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
@@ -45,15 +45,7 @@ class _QRScannerState extends State<QRScanner> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  if (result != null &&
-                      describeEnum(result!.format) != 'qrcode')
-                    Text(translate('qr_scanner_screen.wrong_qr_format'))
-                  else if (result != null &&
-                      describeEnum(result!.format) == 'qrcode' &&
-                      !result!.code!.startsWith('paysnap://transfer'))
-                    Text(translate('qr_scanner_screen.wrong_qr_content'))
-                  else
-                    Text(translate('qr_scanner_screen.scan_qr_code')),
+                  Text(translate('qr_scanner_screen.scan_qr_code')),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,7 +82,7 @@ class _QRScannerState extends State<QRScanner> {
   }
 
   Widget _buildQrView(BuildContext context) {
-    if (disposed) {
+    if (_isDisposed) {
       return const Text('Disposed');
     }
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
@@ -113,6 +105,8 @@ class _QRScannerState extends State<QRScanner> {
   }
 
   void _onQRViewCreated(QRViewController controller) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
     setState(() {
       this.controller = controller;
     });
@@ -120,11 +114,38 @@ class _QRScannerState extends State<QRScanner> {
       setState(() {
         result = scanData;
       });
-      if (result != null &&
-          describeEnum(result!.format) == 'qrcode' &&
-          result!.code!.startsWith('paysnap://')) {
+      if (result != null && result!.format.name != 'qrcode') {
+        if (!_isSnackbarActive) {
+          _isSnackbarActive = true;
+          scaffoldMessenger
+              .showSnackBar(
+                SnackBar(
+                    content: Text(translate(
+                        'qr_scanner_screen.notification.wrong_code_format'))),
+              )
+              .closed
+              .then((_) => _isSnackbarActive = false);
+        }
+      } else if (result != null &&
+          result!.format.name == 'qrcode' &&
+          (result!.code!.startsWith('paysnap://payment?') &&
+              result!.code!.contains('amount=') &&
+              result!.code!.contains('product=') &&
+              result!.code!.contains('uid='))) {
         launchUrl(Uri.parse(result!.code!));
         dispose();
+      } else {
+        if (!_isSnackbarActive) {
+          _isSnackbarActive = true;
+          scaffoldMessenger
+              .showSnackBar(
+                SnackBar(
+                    content: Text(translate(
+                        'qr_scanner_screen.notification.wrong_qr_content'))),
+              )
+              .closed
+              .then((_) => _isSnackbarActive = false);
+        }
       }
     });
   }
@@ -142,7 +163,7 @@ class _QRScannerState extends State<QRScanner> {
 
   @override
   void dispose() {
-    disposed = true;
+    _isDisposed = true;
     controller?.dispose();
     super.dispose();
   }

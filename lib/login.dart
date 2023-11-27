@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:paysnap/styles.dart';
-import 'user_resetPassword.dart';
+import 'user_reset_password.dart';
 import 'home.dart';
 import 'user_new.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
+  const Login({super.key});
+
   @override
-  _LoginState createState() => _LoginState();
+  LoginState createState() => LoginState();
 }
 
-class _LoginState extends State<Login> {
+class LoginState extends State<Login> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   final mailController = TextEditingController();
   final passwordController = TextEditingController();
-  String _error_signIn = '';
+  String _signInError = '';
   bool _loginEnabled = false;
-  bool passwordVisible = false;
+  bool _passwordVisible = false;
 
   @override
   void initState() {
     super.initState();
-    passwordVisible = true;
+    _passwordVisible = true;
   }
 
   @override
@@ -37,46 +39,50 @@ class _LoginState extends State<Login> {
 
   // Sign in
   Future<void> signIn() async {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+    navigateToPage(Widget page) => Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => page,
+          ),
+        );
+
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
         email: mailController.text,
         password: passwordController.text,
       );
 
-      // Sign in successfull -> navigate to home page
+      // Sign in successful -> navigate to home page
       if (userCredential.user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage(),
-          ),
-        );
+        navigateToPage(const HomePage());
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-credential') {
-        _error_signIn = translate('login_screen.error.invalid_credentials');
+        _signInError = translate('login_screen.error.invalid_credentials');
       } else if (e.code == 'invalid-email') {
-        _error_signIn = translate('login_screen.error.invalid_email');
+        _signInError = translate('login_screen.error.invalid_email');
       } else {
-        _error_signIn = translate('login_screen.error.sign_in');
+        _signInError = translate('login_screen.error.sign_in');
       }
       final snackBar = SnackBar(
-        content: Text(_error_signIn),
+        content: Text(_signInError),
       );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      scaffoldMessenger.showSnackBar(snackBar);
     } catch (e) {
-      _error_signIn = translate('login_screen.error.sign_in');
+      _signInError = translate('login_screen.error.sign_in');
       final snackBar = SnackBar(
-        content: Text(_error_signIn),
+        content: Text(_signInError),
       );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      scaffoldMessenger.showSnackBar(snackBar);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      onPopInvoked: (val) => false,
       child: Scaffold(
         appBar: AppBar(
           title: Text(translate('login_screen.title')),
@@ -95,15 +101,14 @@ class _LoginState extends State<Login> {
                 ),
               ),
               Padding(
-                //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: TextField(
                   controller: mailController,
                   onChanged: (value) {
                     updateLoginState();
                   },
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       labelText: translate('login_screen.email_label'),
                       hintText: translate('login_screen.email_hint')),
                 ),
@@ -111,25 +116,24 @@ class _LoginState extends State<Login> {
               Padding(
                 padding: const EdgeInsets.only(
                     left: 15.0, right: 15.0, top: 15, bottom: 30),
-                //padding: EdgeInsets.symmetric(horizontal: 15),
                 child: TextField(
                   controller: passwordController,
-                  obscureText: passwordVisible,
+                  obscureText: _passwordVisible,
                   onChanged: (value) {
                     updateLoginState();
                   },
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: translate('login_screen.password_label'),
                     hintText: translate('login_screen.password_hint'),
                     suffixIcon: IconButton(
-                      icon: Icon(passwordVisible
+                      icon: Icon(_passwordVisible
                           ? Icons.visibility
                           : Icons.visibility_off),
                       onPressed: () {
                         setState(
                           () {
-                            passwordVisible = !passwordVisible;
+                            _passwordVisible = !_passwordVisible;
                           },
                         );
                       },
@@ -139,8 +143,10 @@ class _LoginState extends State<Login> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => UserResetPassword()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const UserResetPassword()));
                 },
                 child: Text(
                   translate('login_screen.forgot_password_button'),
@@ -160,8 +166,8 @@ class _LoginState extends State<Login> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => UserNew()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const UserNew()));
                 },
                 child: Text(
                   translate('login_screen.new_user_link'),
@@ -177,7 +183,7 @@ class _LoginState extends State<Login> {
 
   void updateLoginState() {
     setState(() {
-      // Aktualisiere den Zustand des Buttons basierend auf der Eingabe in beiden Feldern
+      // Update button state based on input fields
       _loginEnabled =
           mailController.text.isNotEmpty && passwordController.text.isNotEmpty;
     });

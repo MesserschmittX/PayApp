@@ -52,6 +52,8 @@ dependencies:
       url: https://github.com/MesserschmittX/QR-Image-Generator.git
       ref: main
   path_provider: ^2.1.1
+  printing: ^5.11.1
+  pdf: ^3.10.6
 
 dev_dependencies:
   flutter_test:

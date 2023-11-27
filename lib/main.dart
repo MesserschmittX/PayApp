@@ -13,7 +13,7 @@ import 'home.dart';
 void main() async {
   var delegate = await LocalizationDelegate.create(
       fallbackLocale: 'de', supportedLocales: ['en', 'de']);
-  runApp(LocalizedApp(delegate, MyApp()));
+  runApp(LocalizedApp(delegate, const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -63,7 +63,6 @@ class MyAppState extends State<MyApp> {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
             seedColor: Styles.primaryColor,
-            // ···
             brightness: _brightness,
           ),
           textTheme: const TextTheme(
@@ -88,13 +87,13 @@ class MyAppState extends State<MyApp> {
             if (snapshot.connectionState == ConnectionState.done) {
               if (FirebaseAuth.instance.currentUser != null) {
                 // signed in
-                return HomePage();
+                return const HomePage();
               } else {
                 // signed out
-                return Login();
+                return const Login();
               }
             } else {
-              return SplashScreen();
+              return const SplashScreen();
             }
           },
         ),

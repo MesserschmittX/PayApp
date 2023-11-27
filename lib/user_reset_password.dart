@@ -7,11 +7,13 @@ import 'firebase_exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserResetPassword extends StatefulWidget {
+  const UserResetPassword({super.key});
+
   @override
-  _UserResetPasswordState createState() => _UserResetPasswordState();
+  UserResetPasswordState createState() => UserResetPasswordState();
 }
 
-class _UserResetPasswordState extends State<UserResetPassword> {
+class UserResetPasswordState extends State<UserResetPassword> {
   FirebaseAuth auth = FirebaseAuth.instance;
   static late AuthStatus _status;
 
@@ -36,6 +38,15 @@ class _UserResetPasswordState extends State<UserResetPassword> {
 
   @override
   Widget build(BuildContext context) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+    navigateToPage(Widget page) => Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => page,
+          ),
+        );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('user_resetPassword_screen.title')),
@@ -80,12 +91,7 @@ class _UserResetPasswordState extends State<UserResetPassword> {
                           _status =
                               await resetPassword(mail: mailController.text);
                           if (_status == AuthStatus.successful) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Login(),
-                              ),
-                            );
+                            navigateToPage(const Login());
                           } else {
                             final error =
                                 AuthExceptionHandler.generateErrorMessage(
@@ -93,8 +99,7 @@ class _UserResetPasswordState extends State<UserResetPassword> {
                             final snackBar = SnackBar(
                               content: Text(error),
                             );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                            scaffoldMessenger.showSnackBar(snackBar);
                           }
                         }
                       },
@@ -110,7 +115,7 @@ class _UserResetPasswordState extends State<UserResetPassword> {
 
   void updateResetState() {
     setState(() {
-      // Aktualisiere den Zustand des Buttons basierend auf der Eingabe in beiden Feldern
+      // Update button state based on input fields
       _resetEnabled = mailController.text.isNotEmpty;
     });
   }

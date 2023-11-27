@@ -10,14 +10,12 @@ enum AuthStatus {
   weakPassword,
   unknown,
   differentPassword,
-  failedReauth,
+  failedReAuth,
   timeOut
 }
 
 class AuthExceptionHandler {
   static handleAuthException(FirebaseAuthException e) {
-    print(e);
-    print(e.code);
     AuthStatus status;
     switch (e.code) {
       case "invalid-email":
@@ -36,7 +34,7 @@ class AuthExceptionHandler {
         status = AuthStatus.emailAlreadyExists;
         break;
       case "internal-error":
-        status = AuthStatus.failedReauth;
+        status = AuthStatus.failedReAuth;
       case "too-many-requests":
         status = AuthStatus.timeOut;
       default:
@@ -66,8 +64,8 @@ class AuthExceptionHandler {
       case AuthStatus.differentPassword:
         errorMessage = translate('firebase_exception.different_password');
         break;
-      case AuthStatus.failedReauth:
-        errorMessage = translate('firebase_exception.failed_reauth');
+      case AuthStatus.failedReAuth:
+        errorMessage = translate('firebase_exception.failed_re_auth');
       case AuthStatus.timeOut:
         errorMessage = translate('firebase_exception.time_out');
       default:

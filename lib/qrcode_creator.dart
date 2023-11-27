@@ -1,10 +1,12 @@
-import 'dart:typed_data';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:paysnap/styles.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import 'package:qr_image_generator/qr_image_generator.dart';
 
 class QRCreator extends StatefulWidget {
@@ -32,25 +34,23 @@ class _QRCreatorState extends State<QRCreator> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 15),
+              padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 10),
               child: TextField(
                 maxLength: 7,
                 keyboardType: TextInputType.number,
                 controller: amountController,
-                onChanged: (value) async {},
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    suffixIcon: Icon(Icons.euro),
+                    suffixIcon: const Icon(Icons.euro),
                     labelText: translate('qr_creator_screen.amount_label'),
                     hintText: translate('qr_creator_screen.amount_hint')),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 15),
+              padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 10),
               child: TextField(
                 maxLength: 50,
                 controller: productController,
-                onChanged: (value) async {},
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: translate('qr_creator_screen.product_label'),
@@ -60,7 +60,7 @@ class _QRCreatorState extends State<QRCreator> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 5, bottom: 10),
+                  left: 15.0, right: 15.0, top: 2, bottom: 10),
               child: SizedBox(
                 height: Styles.buttonHeight,
                 width: Styles.buttonWidth,
@@ -95,7 +95,7 @@ class _QRCreatorState extends State<QRCreator> {
       generator
           .generate(
         data:
-            "paysnap://transfer?amount=$amount&product=$product&uid=${user!.uid}",
+            "paysnap://payment?amount=$amount&product=$product&uid=${user!.uid}",
         filePath: '$appDocPath/qr.png',
       )
           .then((value) {
@@ -140,7 +140,81 @@ class _QRCreatorState extends State<QRCreator> {
 
   Widget _buildQrView() {
     if (qrBytes != null && qrBytes!.isNotEmpty) {
-      return Image.memory(qrBytes!, scale: .7);
+      return Column(children: [
+        Padding(
+            padding: const EdgeInsets.only(
+                left: 15.0, right: 15.0, top: 10, bottom: 10),
+            child: Image.memory(qrBytes!, scale: .8)),
+        Padding(
+          padding: const EdgeInsets.only(
+              left: 15.0, right: 15.0, top: 10, bottom: 10),
+          child: SizedBox(
+            height: Styles.buttonHeight,
+            width: Styles.buttonWidth,
+            child: ElevatedButton(
+              child: Text(translate('qr_creator_screen.print_code_button')),
+              onPressed: () async {
+                final doc = pw.Document();
+                final qrImage = pw.MemoryImage(qrBytes!);
+                final paypalLogo =
+                    await rootBundle.load('assets/images/PayPal.png');
+                final imageBytes = paypalLogo.buffer.asUint8List();
+                final paypalLogoImage = pw.MemoryImage(imageBytes);
+                const pw.TextStyle textStyle = pw.TextStyle(fontSize: 35);
+
+                doc.addPage(pw.Page(
+                    pageFormat: PdfPageFormat.a4,
+                    theme: pw.ThemeData.withFont(
+                      base: await PdfGoogleFonts.openSansRegular(),
+                      bold: await PdfGoogleFonts.openSansBold(),
+                      icons: await PdfGoogleFonts.materialIcons(),
+                    ),
+                    build: (pw.Context context) {
+                      return pw.Center(
+                        child: pw.Column(children: [
+                          pw.Column(
+                              mainAxisAlignment: pw.MainAxisAlignment.start,
+                              children: [
+                                pw.Align(
+                                  alignment: pw.Alignment.centerLeft,
+                                  child: pw.Text(
+                                      '${translate('qr_creator_screen.product_label')}:',
+                                      style: textStyle),
+                                ),
+                                pw.Align(
+                                  alignment: pw.Alignment.centerLeft,
+                                  child: pw.Text(productController.text,
+                                      style: textStyle),
+                                ),
+                                pw.Align(
+                                  alignment: pw.Alignment.centerLeft,
+                                  child: pw.Text(
+                                      '${translate('qr_creator_screen.amount_label')}:',
+                                      style: textStyle),
+                                ),
+                                pw.Align(
+                                  alignment: pw.Alignment.centerLeft,
+                                  child: pw.Text('${amountController.text} €',
+                                      style: textStyle),
+                                ),
+                              ]),
+                          pw.Padding(
+                              padding: const pw.EdgeInsets.only(top: 40),
+                              child:
+                                  pw.Image(qrImage, width: 400, height: 400)),
+                          pw.Padding(
+                              padding: const pw.EdgeInsets.only(top: 40),
+                              child: pw.Image(paypalLogoImage, width: 150))
+                        ]),
+                      ); // Center
+                    })); // Page
+                await Printing.layoutPdf(
+                    onLayout: (PdfPageFormat format) async => doc.save());
+              },
+            ),
+          ),
+        ),
+      ]);
     }
     return const Text("");
   }

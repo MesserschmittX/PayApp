@@ -15,7 +15,7 @@ class PaypalService {
   String getTransactions() {
     String transactions = "";
     for (var i = 0; i < logQueue.length; i++) {
-      transactions += logQueue[i] + "\n";
+      transactions += "${logQueue[i]}\n";
     }
     return transactions;
   }
@@ -55,7 +55,7 @@ class PaypalService {
       payPalEnvironment: FPayPalEnvironment.sandbox,
       //what currency do you plan to use?
       currencyCode: FPayPalCurrencyCode.eur,
-      //action paynow?
+      //action pay now?
       action: FPayPalUserAction.payNow,
     );
 
@@ -78,7 +78,7 @@ class PaypalService {
           );
         },
         onError: (data) {
-          //an error occured
+          //an error occurred
           logResult("error: ${data.reason}");
         },
         onShippingChange: (data) {

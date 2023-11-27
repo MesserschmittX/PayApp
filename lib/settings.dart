@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:paysnap/styles.dart';
 import 'login.dart';
-import 'user_changePassword.dart';
+import 'user_change_password.dart';
 
 import 'package:settings_ui/settings_ui.dart';
 
 class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     bool darkMode = Theme.of(context).brightness == Brightness.dark;
@@ -52,13 +54,15 @@ class SettingsPage extends StatelessWidget {
                     'settings_screen.account_settings.change_password')),
                 onPressed: (context) async => Navigator.of(context).push(
                     MaterialPageRoute(
-                        builder: (context) => UserChangePassword())),
+                        builder: (context) => const UserChangePassword())),
               ),
               SettingsTile.navigation(
                 leading: const Icon(Icons.logout),
                 title:
                     Text(translate('settings_screen.account_settings.logout')),
-                onPressed: (context) async => logout(context),
+                onPressed: (context) async => logout(() => Navigator.of(context)
+                    .push(MaterialPageRoute(
+                        builder: (context) => const Login()))),
               ),
             ],
           ),
@@ -103,18 +107,17 @@ class SettingsPage extends StatelessWidget {
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
-          child: Text(translate(
-              'settings_screen.general_settings.language_setting.cancel_button')),
           isDefaultAction: true,
           onPressed: () => Navigator.pop(context, null),
+          child: Text(translate(
+              'settings_screen.general_settings.language_setting.cancel_button')),
         ),
       ),
     );
   }
 
-  Future<void> logout(BuildContext context) async {
+  Future<void> logout(Function done) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => Login()));
+    done();
   }
 }

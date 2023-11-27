@@ -8,11 +8,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'settings.dart';
 
 class UserChangePassword extends StatefulWidget {
+  const UserChangePassword({super.key});
+
   @override
-  _UserChangePasswordState createState() => _UserChangePasswordState();
+  UserChangePasswordState createState() => UserChangePasswordState();
 }
 
-class _UserChangePasswordState extends State<UserChangePassword> {
+class UserChangePasswordState extends State<UserChangePassword> {
   FirebaseAuth auth = FirebaseAuth.instance;
   static late AuthStatus _status;
 
@@ -48,14 +50,13 @@ class _UserChangePasswordState extends State<UserChangePassword> {
     final user = auth.currentUser;
     final credential = EmailAuthProvider.credential(
         email: user!.email.toString(), password: passwordOld);
-    print(user.email.toString());
     try {
       await user.reauthenticateWithCredential(credential);
       // proceed with password change
       if (passwordNew1 != passwordNew2) {
         _status = AuthStatus.differentPassword;
       } else {
-        await user!.updatePassword(passwordNew1).then((_) {
+        await user.updatePassword(passwordNew1).then((_) {
           _status = AuthStatus.successful;
         }).catchError((e) {
           _status = AuthExceptionHandler.handleAuthException(e);
@@ -63,9 +64,6 @@ class _UserChangePasswordState extends State<UserChangePassword> {
       }
     } on FirebaseAuthException catch (e) {
       _status = AuthExceptionHandler.handleAuthException(e);
-      print(e);
-      print(e.code);
-      print("Authentifizierung mit altem Passwort fehlgeschlagen");
     }
 
     return _status;
@@ -82,6 +80,14 @@ class _UserChangePasswordState extends State<UserChangePassword> {
 
   @override
   Widget build(BuildContext context) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    navigateToPage(Widget page) => Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => page,
+          ),
+        );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('user_changePassword_screen.title')),
@@ -90,7 +96,6 @@ class _UserChangePasswordState extends State<UserChangePassword> {
         child: Column(
           children: <Widget>[
             Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: const EdgeInsets.only(
                   left: 15.0, right: 15.0, top: 15, bottom: 15),
               child: TextField(
@@ -121,7 +126,6 @@ class _UserChangePasswordState extends State<UserChangePassword> {
               ),
             ),
             Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: const EdgeInsets.only(
                   left: 15.0, right: 15.0, top: 15, bottom: 15),
               child: TextField(
@@ -152,7 +156,6 @@ class _UserChangePasswordState extends State<UserChangePassword> {
               ),
             ),
             Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: const EdgeInsets.only(
                   left: 15.0, right: 15.0, top: 15, bottom: 15),
               child: TextField(
@@ -188,24 +191,19 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                     mail: auth.currentUser!.email.toString());
                 if (status0 == AuthStatus.successful) {
                   await FirebaseAuth.instance.signOut();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Login(),
-                    ),
-                  );
+                  navigateToPage(const Login());
                   final snackBar = SnackBar(
                     content: Text(translate(
                         'user_changePassword_screen.reset_mail_sent')),
                   );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  scaffoldMessenger.showSnackBar(snackBar);
                 } else {
                   final error =
                       AuthExceptionHandler.generateErrorMessage(status0);
                   final snackBar = SnackBar(
                     content: Text(error),
                   );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  scaffoldMessenger.showSnackBar(snackBar);
                 }
               },
               child: Text(
@@ -225,19 +223,14 @@ class _UserChangePasswordState extends State<UserChangePassword> {
                             passwordNew1: passwordNew1Controller.text,
                             passwordNew2: passwordNew2Controller.text);
                         if (status == AuthStatus.successful) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SettingsPage(),
-                            ),
-                          );
+                          navigateToPage(const SettingsPage());
                         } else {
-                          final _error =
+                          final error =
                               AuthExceptionHandler.generateErrorMessage(status);
                           final snackBar = SnackBar(
-                            content: Text(_error),
+                            content: Text(error),
                           );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          scaffoldMessenger.showSnackBar(snackBar);
                         }
                       },
                 child: Text(translate(
@@ -252,7 +245,7 @@ class _UserChangePasswordState extends State<UserChangePassword> {
 
   void updateChangeState() {
     setState(() {
-      // Aktualisiere den Zustand des Buttons basierend auf der Eingabe in beiden Feldern
+      // Update button state based on input fields
       _changeEnabled = passwordOldController.text.isNotEmpty &&
           passwordNew1Controller.text.isNotEmpty &&
           passwordNew2Controller.text.isNotEmpty;

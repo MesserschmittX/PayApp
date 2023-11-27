@@ -9,15 +9,11 @@ class Init {
   }
 
   static _registerServices() async {
-    print("starting registering services");
-    await Future.delayed(Duration(seconds: 1));
-    print("finished registering services");
+    await Future.delayed(const Duration(seconds: 1));
   }
 
   static _loadSettings() async {
-    print("starting loading settings");
-    await Future.delayed(Duration(seconds: 1));
-    print("finished loading settings");
+    await Future.delayed(const Duration(seconds: 1));
   }
 
   static _initFirebase() async {

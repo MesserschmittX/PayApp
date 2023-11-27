@@ -6,8 +6,8 @@
     "home_screen": {
         "title": "PaySnap",
         "home": {
-            "scan_qr_code": "QR Code scannen",
-            "create_qr_code": "QR Code erstellen"
+            "scan_qr_code": "QR-Code scannen",
+            "create_qr_code": "QR-Code erstellen"
         },
         "transactions": {
             "past_transactions": "Bisherige Zahlungen"
@@ -40,10 +40,10 @@
     },
     "qr_scanner_screen": {
         "title": "QR-Code Leser",
-        "wrong_qr_format": "Falsches QR-Code Format",
-        "wrong_qr_content": "Falscher QR-Code Inhalt",
         "scan_qr_code": "Scanne einen QR-Code",
         "notification": {
+            "wrong_code_format": "Falsches Code Format, versuche es mit einem QR-Code",
+            "wrong_qr_content": "Falscher QR-Code Inhalt, versuche es mit einem anderen QR-Code",
             "no_permission": "Keine Berechtigung"
         }
     },
@@ -54,6 +54,7 @@
         "product_label": "Produkt name",
         "product_hint": "Produkt name eingeben",
         "create_code_button": "QR-Code erstellen",
+        "print_code_button": "QR-Code drucken",
         "error": {
             "no_user": "Nutzer nicht angemeldet",
             "invalid_amount": "Ungültige Summe",
@@ -92,14 +93,14 @@
             "logout": "Abmelden"
         }
     },
-    "transfer_screen": {
+    "payment_screen": {
         "title": "Überweisen",
         "description": "Beschreibung",
         "recipient": "Empfänger",
-        "transfer_button": "Jetzt überweisen",
+        "payment_button": "Jetzt überweisen",
         "cancel_button": "Abbrechen"
     },
-    "transfer_success_screen": {
+    "payment_success_screen": {
         "title": "Überweiseung erfolgreich",
         "close_button": "Schließen"
     },
@@ -147,7 +148,7 @@
         "invalid_credential": "Die Email oder das Passwort ist falsch",
         "email_already_exists": "Die Email Addresse ist bereits registriert",
         "different_password": "Die neuen Passwörter stimmen nicht überein",
-        "failed_reauth": "Authentifizierung fehlgeschlagen. Bitte melden Sie sich erneut an",
+        "failed_re_auth": "Authentifizierung fehlgeschlagen. Bitte melden Sie sich erneut an",
         "time_out": "Zu viele Anfragen. Bitte versuchen Sie es später erneut",
         "default": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut"
     }

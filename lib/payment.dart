@@ -4,46 +4,47 @@ import 'package:paysnap/home.dart';
 import 'package:paysnap/paypal_service.dart';
 import 'package:paysnap/styles.dart';
 
-import 'transfer_data.dart';
-import 'transfer_success.dart';
+import 'payment_data.dart';
+import 'payment_success.dart';
 
-class TransferPage extends StatelessWidget {
-  TransferData transferData;
-  TransferPage(this.transferData);
+class PaymentPage extends StatelessWidget {
+  final PaymentData paymentData;
+  const PaymentPage(this.paymentData, {super.key});
 
+  @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text(translate("transfer_screen.title")),
+          title: Text(translate("payment_screen.title")),
           automaticallyImplyLeading: false,
         ),
         body: Container(
           alignment: Alignment.center,
           child: Column(children: [
             Padding(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Column(
                 children: [
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "${translate("transfer_screen.recipient")}: ",
+                      "${translate("payment_screen.recipient")}: ",
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(transferData.product),
+                    child: Text(paymentData.product),
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "${translate("transfer_screen.description")}: ",
+                      "${translate("payment_screen.description")}: ",
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(transferData.product),
+                    child: Text(paymentData.product),
                   ),
                 ],
               ),
@@ -62,7 +63,7 @@ class TransferPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("${transferData.amount} €",
+                  Text("${paymentData.amount} €",
                       style: const TextStyle(fontSize: 40))
                 ],
               ),
@@ -71,16 +72,16 @@ class TransferPage extends StatelessWidget {
               height: Styles.buttonHeight,
               width: Styles.buttonWidth,
               child: FilledButton(
-                child: Text(translate("transfer_screen.transfer_button")),
+                child: Text(translate("payment_screen.payment_button")),
                 onPressed: () {
                   PaypalService().makePayment(
-                      transferData.amount,
+                      paymentData.amount,
                       (String msg) => {
                             if (msg.startsWith("Order successful") ||
                                 msg.startsWith("shipping change"))
                               {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => SuccessPage()))
+                                    builder: (context) => const SuccessPage()))
                               }
                           });
                 },
@@ -91,7 +92,7 @@ class TransferPage extends StatelessWidget {
               height: Styles.buttonHeight,
               width: Styles.buttonWidth,
               child: ElevatedButton(
-                child: Text(translate("transfer_screen.cancel_button")),
+                child: Text(translate("payment_screen.cancel_button")),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const HomePage()));

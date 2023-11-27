@@ -1,3 +1,15 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "cSpell.words": [
+        "appspot",
+        "cameraswitch",
+        "cupertino",
+        "firebaseapp",
+        "paypalpay",
+        "paysnap",
+        "qrcode"
+    ],
+    "cSpell.ignorePaths": [
+        "assets/i18n/de.json",
+    ]
 }

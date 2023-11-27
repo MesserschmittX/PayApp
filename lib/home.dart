@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,12 +9,11 @@ import 'package:paysnap/styles.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:paysnap/paypal_service.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'settings.dart';
 import 'about.dart';
-import 'transfer.dart';
-import 'transfer_data.dart';
+import 'payment.dart';
+import 'payment_data.dart';
 import 'qrcode_scanner.dart';
 import 'login.dart';
 
@@ -28,9 +28,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
-
-  StreamSubscription? _streamSubscription;
-  Object? _err;
   Uri? _incomingURI;
   Map<String, String> _uriQuery = {};
   String _uid = '';
@@ -67,26 +64,25 @@ class _HomePageState extends State<HomePage> {
       } on PlatformException {
         // 5
         debugPrint("Failed to receive initial uri");
-      } on FormatException catch (err) {
+      } on FormatException catch (e) {
         // 6
         if (!mounted) {
           return;
         }
-        debugPrint('Malformed Initial URI received');
+        debugPrint('Malformed Initial URI received: ${jsonEncode(e)}');
       }
     }
   }
 
   void _incomingLinkHandler() {
     // 2
-    _streamSubscription = uriLinkStream.listen((Uri? uri) {
+    uriLinkStream.listen((Uri? uri) {
       if (!mounted) {
         return;
       }
       debugPrint('Received URI: $uri');
       setState(() {
         _incomingURI = uri;
-        _err = null;
         processURI();
       });
       // 3
@@ -97,54 +93,44 @@ class _HomePageState extends State<HomePage> {
       debugPrint('Error occurred: $err');
       setState(() {
         _incomingURI = null;
-        if (err is FormatException) {
-          _err = err;
-        } else {
-          _err = null;
-        }
       });
     });
   }
 
   void processURI() {
-    print('process URI');
     if (_incomingURI != null) {
-      if (_incomingURI?.host == 'transfer') {
+      if (_incomingURI?.host == 'payment') {
         _uriQuery = _incomingURI!.queryParameters;
         _uid = _uriQuery['uid'].toString();
         _product = _uriQuery['product'].toString();
         _amount = double.parse(_uriQuery['amount'].toString());
-        var transferData = TransferData(_uid, _product, _amount);
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => TransferPage(transferData)));
+        var paymentData = PaymentData(_uid, _product, _amount);
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => PaymentPage(paymentData)));
       }
     }
   }
 
-  Future<void> onSelected(BuildContext context, item) async {
+  Future<void> onSelected(item, Function openPage) async {
     switch (item) {
       case 'settings':
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => SettingsPage()));
+        openPage(const SettingsPage());
         break;
       case 'about':
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => AboutPage()));
+        openPage(const AboutPage());
       case 'licenses':
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => OssLicensesPage()));
+        openPage(const OssLicensesPage());
       case 'logout':
         await FirebaseAuth.instance.signOut();
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Login()));
+        openPage(const Login());
         break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      onPopInvoked: (val) => false,
       child: Scaffold(
         appBar: AppBar(
           leading: Image.asset('assets/images/paysnap.png'),
@@ -152,7 +138,10 @@ class _HomePageState extends State<HomePage> {
           actions: <Widget>[
             PopupMenuButton(
                 icon: const Icon(Icons.menu),
-                onSelected: (value) => onSelected(context, value),
+                onSelected: (value) => onSelected(
+                    value,
+                    (StatelessWidget widget) => Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => widget))),
                 itemBuilder: (context) => [
                       PopupMenuItem(
                         value: "settings",
@@ -186,12 +175,12 @@ class _HomePageState extends State<HomePage> {
           selectedIndex: currentPageIndex,
           destinations: <Widget>[
             NavigationDestination(
-              selectedIcon: Icon(Icons.home),
-              icon: Icon(Icons.home_outlined),
+              selectedIcon: const Icon(Icons.home),
+              icon: const Icon(Icons.home_outlined),
               label: translate('home_screen.navigation.home'),
             ),
             NavigationDestination(
-              icon: Icon(Icons.business),
+              icon: const Icon(Icons.business),
               label: translate('home_screen.navigation.transactions'),
             ),
           ],
