@@ -143,12 +143,16 @@
     },
     "about_screen": {
         "title": "About",
-        "headline1": "Powered by",
-        "description1.1": "Daniel",
+        "headline1": "DEVELOPED BY",
+        "description1.1": "Daniel Messerschmitt",
         "description1.2": "Kevin Hoss",
-        "description1.3": "Duale Hochschule Badenwürttemberg CAS",
-        "headline2": "Development",
-        "description2.1": "PaySnap was created in"
+        "description1.3": "Robert Bosch GmbH",
+        "headline2": "PROJECT",
+        "description2.1": "Module: Mobile Computing (T3M40401)",
+        "description2.2": "Duale Hochschule Baden-Württemberg",
+        "description2.3": "Center for Advanced Studies",
+        "headline3": "DEVELOPMENT",
+        "description3.1": "This app was developed in the period from 26.10.2023 to 29.11.2023. The development order was created as part of the Mobile Computing module at the Baden-Württemberg Cooperative State University Center for Advanced Studies."
     },
     "license_screen": {
         "title": "Open Source Licenses"

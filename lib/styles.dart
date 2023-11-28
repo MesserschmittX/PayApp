@@ -6,6 +6,11 @@ class Styles {
       fontSize: 15,
       decoration: TextDecoration.underline);
 
+  static TextStyle aboutHeadline =
+      const TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
+  static TextStyle aboutText =
+      const TextStyle(fontSize: 17, color: Colors.grey);
+
   static const Color primaryColor = Color.fromARGB(255, 1, 49, 89);
   static const Color secondaryColor = Color.fromARGB(255, 5, 221, 249);
 
