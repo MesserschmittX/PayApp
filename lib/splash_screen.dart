@@ -13,8 +13,8 @@ class SplashScreen extends StatelessWidget {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
+          Styles.secondaryColor,
           Styles.primaryColor,
-          Colors.cyanAccent,
         ],
       )),
       child: Column(

@@ -78,12 +78,14 @@ class UserNewState extends State<UserNew> {
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('user_new_screen.title')),
+        backgroundColor: Styles.primaryColor,
+        foregroundColor: Styles.secondaryColor,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 60.0, bottom: 20),
+              padding: const EdgeInsets.only(top: 60.0),
               child: Center(
                 child: SizedBox(
                     width: 200,

@@ -49,7 +49,10 @@ class UserResetPasswordState extends State<UserResetPassword> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(translate('user_resetPassword_screen.title')),
+        title: Text(translate('user_resetPassword_screen.title'),
+            style: TextStyle(fontSize: 25)),
+        backgroundColor: Styles.primaryColor,
+        foregroundColor: Styles.secondaryColor,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -64,9 +67,8 @@ class UserResetPasswordState extends State<UserResetPassword> {
               ),
             ),
             Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: const EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 15, bottom: 30),
+              padding:
+                  const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 30),
               child: TextField(
                 controller: mailController,
                 onChanged: (value) {

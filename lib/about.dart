@@ -7,7 +7,11 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text(translate("about_screen.title"))),
+        appBar: AppBar(
+          title: Text(translate("about_screen.title")),
+          backgroundColor: Styles.primaryColor,
+          foregroundColor: Styles.secondaryColor,
+        ),
         body: Padding(
             padding: const EdgeInsets.only(left: 15, right: 15),
             child: Column(

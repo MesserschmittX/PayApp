@@ -91,6 +91,8 @@ class UserChangePasswordState extends State<UserChangePassword> {
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('user_changePassword_screen.title')),
+        backgroundColor: Styles.primaryColor,
+        foregroundColor: Styles.secondaryColor,
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -11,8 +11,8 @@ class Styles {
   static TextStyle aboutText =
       const TextStyle(fontSize: 17, color: Colors.grey);
 
-  static const Color primaryColor = Color.fromARGB(255, 1, 49, 89);
-  static const Color secondaryColor = Color.fromARGB(255, 5, 221, 249);
+  static const Color primaryColor = Color.fromARGB(255, 5, 221, 249);
+  static const Color secondaryColor = Color.fromARGB(255, 1, 49, 89);
 
   static double buttonHeight = 50;
   static double buttonWidth = 250;
