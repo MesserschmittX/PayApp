@@ -110,10 +110,12 @@
     },
     "user_new_screen": {
         "title": "Create account",
+        "name_label": "Name",
+        "name_hint": "Name",
         "email_label": "Email",
-        "email_hint": "Enter valid email, eg: abc@gmail.com",
+        "email_hint": "eg: abc@gmail.com",
         "password_label": "Password",
-        "password_hint": "Enter secure password",
+        "password_hint": "Password",
         "create_account_button": "Create account",
         "error": {
             "password_to_weak": "The password provided is too weak",

@@ -17,6 +17,7 @@ class UserNewState extends State<UserNew> {
 
   final mailController = TextEditingController();
   final passwordController = TextEditingController();
+  final nameController = TextEditingController();
   String _signUpError = '';
   bool _signUpEnabled = false;
 
@@ -25,6 +26,7 @@ class UserNewState extends State<UserNew> {
     // Clean up the controller when the widget is disposed.
     mailController.dispose();
     passwordController.dispose();
+    nameController.dispose();
     super.dispose();
   }
 
@@ -42,6 +44,7 @@ class UserNewState extends State<UserNew> {
         email: mailController.text,
         password: passwordController.text,
       );
+      userCredential.user?.updateDisplayName(nameController.text);
 
       // Sign up successful -> navigate to home page
       if (userCredential.user != null) {
@@ -89,8 +92,22 @@ class UserNewState extends State<UserNew> {
               ),
             ),
             Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding:
+                  const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15),
+              child: TextField(
+                controller: nameController,
+                onChanged: (value) {
+                  updateSignUpState();
+                },
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: translate('user_new_screen.name_label'),
+                    hintText: translate('user_new_screen.name_hint')),
+              ),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15),
               child: TextField(
                 controller: mailController,
                 onChanged: (value) {
@@ -103,9 +120,8 @@ class UserNewState extends State<UserNew> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 15, bottom: 30),
-              //padding: EdgeInsets.symmetric(horizontal: 15),
+              padding:
+                  const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 30),
               child: TextField(
                 controller: passwordController,
                 onChanged: (value) {
@@ -135,8 +151,9 @@ class UserNewState extends State<UserNew> {
   void updateSignUpState() {
     setState(() {
       // Update button state based on input fields
-      _signUpEnabled =
-          mailController.text.isNotEmpty && passwordController.text.isNotEmpty;
+      _signUpEnabled = mailController.text.isNotEmpty &&
+          passwordController.text.isNotEmpty &&
+          nameController.text.isNotEmpty;
     });
   }
 }
