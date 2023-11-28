@@ -14,6 +14,7 @@
             "error_loading_data": "Error loading data",
             "no_transaction_history": "No transaction history"
         },
+        "qr_format_error": "Wrong QR-Code format",
         "navigation": {
             "home": "Home",
             "transactions": "Transactions"
@@ -46,7 +47,8 @@
         "notification": {
             "wrong_code_format": "Wrong Code format, try a QR-Code",
             "wrong_qr_content": "Wrong QR-Code content, try different code",
-            "no_permission": "No permission"
+            "no_permission": "No permission",
+            "amount_invalid": "Invalid amount"
         }
     },
     "qr_creator_screen": {

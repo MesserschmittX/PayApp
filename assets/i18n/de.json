@@ -14,6 +14,7 @@
             "error_loading_data": "Fehler beim Laden der Daten",
             "no_transaction_history": "Keine Zahlungshistorie vorhanden"
         },
+        "qr_format_error": "Falsches QR-Code format",
         "navigation": {
             "home": "Home",
             "transactions": "Zahlungen"
@@ -46,7 +47,8 @@
         "notification": {
             "wrong_code_format": "Falsches Code Format, versuche es mit einem QR-Code",
             "wrong_qr_content": "Falscher QR-Code Inhalt, versuche es mit einem anderen QR-Code",
-            "no_permission": "Keine Berechtigung"
+            "no_permission": "Keine Berechtigung",
+            "amount_invalid": "Ungültiger Preis"
         }
     },
     "qr_creator_screen": {

@@ -120,13 +120,21 @@ class _HomePageState extends State<HomePage> {
   void processURI() {
     if (_incomingURI != null) {
       if (_incomingURI?.host == 'payment') {
-        _uriQuery = _incomingURI!.queryParameters;
-        _uid = _uriQuery['uid'].toString();
-        _product = _uriQuery['product'].toString();
-        _amount = double.parse(_uriQuery['amount'].toString());
-        var paymentData = PaymentData(_uid, _product, _amount);
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => PaymentPage(paymentData)));
+        try {
+          _uriQuery = _incomingURI!.queryParameters;
+          _uid = _uriQuery['uid'].toString();
+          _product = _uriQuery['product'].toString();
+          _amount =
+              double.parse(_uriQuery['amount'].toString().replaceAll(',', '.'));
+          var paymentData = PaymentData(_uid, _product, _amount);
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => PaymentPage(paymentData)));
+        } catch (e) {
+          final snackBar = SnackBar(
+            content: Text(translate('home_screen.qr_format_error')),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
       }
     }
   }

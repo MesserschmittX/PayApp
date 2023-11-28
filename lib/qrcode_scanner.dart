@@ -132,6 +132,30 @@ class _QRScannerState extends State<QRScanner> {
               result!.code!.contains('amount=') &&
               result!.code!.contains('product=') &&
               result!.code!.contains('uid='))) {
+        try {
+          Uri uri = Uri.parse(result!.code!);
+          String? amountString = uri.queryParameters['amount'];
+          double amount = 0.0;
+          if (amountString != null) {
+            amount = double.parse(amountString);
+          }
+          if (amount <= 0) {
+            throw Exception('Amount is not valid');
+          }
+        } catch (e) {
+          if (!_isSnackbarActive) {
+            _isSnackbarActive = true;
+            scaffoldMessenger
+                .showSnackBar(
+                  SnackBar(
+                      content: Text(translate(
+                          'qr_scanner_screen.notification.amount_invalid'))),
+                )
+                .closed
+                .then((_) => _isSnackbarActive = false);
+          }
+          return;
+        }
         launchUrl(Uri.parse(result!.code!));
         dispose();
       } else {
