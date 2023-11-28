@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<List<Map<String, dynamic>>> getPaymentHistory(String uid) async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('/transfer/kevin11/history')
+        .collection('/transfer/$uid/history')
         .get();
 
     List<Map<String, dynamic>> payments = [];
