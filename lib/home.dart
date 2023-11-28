@@ -55,8 +55,10 @@ class _HomePageState extends State<HomePage> {
 
     QueryDocumentSnapshot doc;
     for (doc in querySnapshot.docs) {
+      print(doc);
       payments.add(doc.data() as Map<String, dynamic>);
     }
+    print(payments);
 
     return payments;
   }
@@ -253,26 +255,31 @@ class _HomePageState extends State<HomePage> {
                             child: Column(
                           children: [
                             ListTile(
-                                leading: const Icon(
-                                  Icons.paid,
-                                  color: Styles.primaryColor,
+                              leading: const Icon(
+                                Icons.paid,
+                                color: Styles.primaryColor,
+                              ),
+                              title: Text(
+                                'Receiver: ${snapshot.data![index]['receiver']}',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              ),
+                              subtitle: Row(children: <Widget>[
+                                Text(
+                                  '${timestamp.toDate().day}.${timestamp.toDate().month}.${timestamp.toDate().year}\n${snapshot.data![index]['product']} | -${snapshot.data![index]['amount']} € EUR',
+                                  style: const TextStyle(fontSize: 17),
                                 ),
-                                title: Text(
-                                  'Receiver: ${snapshot.data![index]['receiver']}',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
+                                /*Text(
+                                  ' | ${snapshot.data![index]['product']}',
+                                  style: const TextStyle(fontSize: 20),
                                 ),
-                                subtitle: Row(children: <Widget>[
-                                  Text(
-                                    '${timestamp.toDate().day}.${timestamp.toDate().month}.${timestamp.toDate().year}',
-                                    style: const TextStyle(fontSize: 20),
-                                  ),
-                                  Text(
-                                    '/ - ${snapshot.data![index]['amount']} €',
-                                    style: const TextStyle(fontSize: 20),
-                                  ),
-                                ])),
+                                Text(
+                                  ' | -${snapshot.data![index]['amount']} € EUR',
+                                  style: const TextStyle(fontSize: 20),
+                                ),*/
+                              ]),
+                              isThreeLine: true,
+                            ),
                           ],
                         ));
                       },

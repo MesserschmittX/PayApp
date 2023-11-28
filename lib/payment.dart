@@ -91,6 +91,7 @@ class PaymentPage extends StatelessWidget {
                                   "sender": auth.currentUser!.uid,
                                   "amount": paymentData.amount,
                                   "product": paymentData.product,
+                                  "timestamp": DateTime.now(),
                                 }).then((_) {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
