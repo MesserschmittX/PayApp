@@ -32,7 +32,8 @@ class _HomePageState extends State<HomePage> {
   FirebaseAuth auth = FirebaseAuth.instance;
   Uri? _incomingURI;
   Map<String, String> _uriQuery = {};
-  String _uid = '';
+  String _receiverId = '';
+  String _receiverName = '';
   String _product = '';
   double _amount = 0.0;
 
@@ -122,11 +123,13 @@ class _HomePageState extends State<HomePage> {
       if (_incomingURI?.host == 'payment') {
         try {
           _uriQuery = _incomingURI!.queryParameters;
-          _uid = _uriQuery['uid'].toString();
+          _receiverId = _uriQuery['receiverId'].toString();
+          _receiverName = _uriQuery['receiverName'].toString();
           _product = _uriQuery['product'].toString();
           _amount =
               double.parse(_uriQuery['amount'].toString().replaceAll(',', '.'));
-          var paymentData = PaymentData(_uid, _product, _amount);
+          var paymentData =
+              PaymentData(_receiverId, _receiverName, _product, _amount);
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => PaymentPage(paymentData)));
         } catch (e) {
@@ -255,32 +258,48 @@ class _HomePageState extends State<HomePage> {
                         return Card(
                             child: Column(
                           children: [
-                            ListTile(
-                              leading: const Icon(
-                                Icons.paid,
-                                color: Styles.primaryColor,
-                              ),
-                              title: Text(
-                                'Receiver: ${snapshot.data![index]['receiver']}',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
-                              ),
-                              subtitle: Row(children: <Widget>[
-                                Text(
-                                  '${timestamp.toDate().day}.${timestamp.toDate().month}.${timestamp.toDate().year}\n${snapshot.data![index]['product']} | -${snapshot.data![index]['amount']} € EUR',
-                                  style: const TextStyle(fontSize: 17),
+                            if (snapshot.data![index]['receiverId'] ==
+                                auth.currentUser!.uid)
+                              ListTile(
+                                leading: const Icon(
+                                  Icons.paid,
+                                  color: Styles.primaryColor,
                                 ),
-                                /*Text(
-                                  ' | ${snapshot.data![index]['product']}',
-                                  style: const TextStyle(fontSize: 20),
+                                title: Text(
+                                  'Receiver: ${snapshot.data![index]['receiverId']}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
                                 ),
-                                Text(
-                                  ' | -${snapshot.data![index]['amount']} € EUR',
-                                  style: const TextStyle(fontSize: 20),
-                                ),*/
-                              ]),
-                              isThreeLine: true,
-                            ),
+                                subtitle: Row(children: <Widget>[
+                                  Text(
+                                    '${timestamp.toDate().day}.${timestamp.toDate().month}.${timestamp.toDate().year}\n${snapshot.data![index]['product']} | -${snapshot.data![index]['amount']} € EUR',
+                                    style: const TextStyle(fontSize: 17),
+                                  ),
+                                ]),
+                                isThreeLine: true,
+                              ),
+                            if (snapshot.data![index]['senderId'] ==
+                                auth.currentUser!.uid)
+                              ListTile(
+                                leading: const Icon(
+                                  Icons.paid,
+                                  color: Styles.primaryColor,
+                                ),
+                                title: Text(
+                                  'Sender: ${snapshot.data![index]['senderId']}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                                subtitle: Row(children: <Widget>[
+                                  Text(
+                                    '${timestamp.toDate().day}.${timestamp.toDate().month}.${timestamp.toDate().year}\n${snapshot.data![index]['product']} | +${snapshot.data![index]['amount']} € EUR',
+                                    style: const TextStyle(fontSize: 17),
+                                  ),
+                                ]),
+                                isThreeLine: true,
+                              ),
                           ],
                         ));
                       },

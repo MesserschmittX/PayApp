@@ -35,7 +35,23 @@ class _QRCreatorState extends State<QRCreator> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 10),
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 20, bottom: 10),
+              child: TextField(
+                maxLength: 50,
+                controller: productController,
+                onChanged: (value) {
+                  updateCreateState();
+                },
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: translate('qr_creator_screen.product_label'),
+                  hintText: translate('qr_creator_screen.product_hint'),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
               child: TextField(
                 maxLength: 7,
                 keyboardType:
@@ -49,21 +65,6 @@ class _QRCreatorState extends State<QRCreator> {
                     suffixIcon: const Icon(Icons.euro),
                     labelText: translate('qr_creator_screen.amount_label'),
                     hintText: translate('qr_creator_screen.amount_hint')),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 10),
-              child: TextField(
-                maxLength: 50,
-                controller: productController,
-                onChanged: (value) {
-                  updateCreateState();
-                },
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: translate('qr_creator_screen.product_label'),
-                  hintText: translate('qr_creator_screen.product_hint'),
-                ),
               ),
             ),
             Padding(
@@ -104,7 +105,7 @@ class _QRCreatorState extends State<QRCreator> {
       generator
           .generate(
         data:
-            "paysnap://payment?amount=$amount&product=$product&uid=${user!.uid}",
+            "paysnap://payment?receiverId=${user!.uid}&receiverName=${user!.displayName}&product=$product&amount=$amount",
         filePath: '$appDocPath/qr.png',
       )
           .then((value) {
