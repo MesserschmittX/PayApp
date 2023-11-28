@@ -1,7 +1,8 @@
 class PaymentData {
-  String uid;
+  String receiverId;
+  String receiverName;
   String product;
   double amount;
 
-  PaymentData(this.uid, this.product, this.amount);
+  PaymentData(this.receiverId, this.receiverName, this.product, this.amount);
 }

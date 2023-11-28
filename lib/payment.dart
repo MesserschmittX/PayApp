@@ -36,7 +36,7 @@ class PaymentPage extends StatelessWidget {
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(paymentData.uid),
+                    child: Text(paymentData.receiverName),
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -77,6 +77,15 @@ class PaymentPage extends StatelessWidget {
               child: FilledButton(
                 child: Text(translate("payment_screen.payment_button")),
                 onPressed: () {
+                  Map<String, dynamic> firestoreData = {
+                    "receiverId": paymentData.receiverId,
+                    "receiverName": paymentData.receiverName,
+                    "senderId": auth.currentUser!.uid,
+                    "senderName": auth.currentUser!.displayName,
+                    "product": paymentData.product,
+                    "amount": paymentData.amount,
+                    "timestamp": DateTime.now(),
+                  };
                   PaypalService().makePayment(
                       paymentData.amount,
                       (String msg) => {
@@ -86,13 +95,18 @@ class PaymentPage extends StatelessWidget {
                                 FirebaseFirestore.instance
                                     .collection(
                                         "/transfer/${auth.currentUser!.uid}/history")
-                                    .add({
-                                  "receiver": paymentData.uid,
-                                  "sender": auth.currentUser!.uid,
-                                  "amount": paymentData.amount,
-                                  "product": paymentData.product,
-                                  "timestamp": DateTime.now(),
-                                }).then((_) {
+                                    .add(
+                                        {firestoreData} as Map<String, dynamic>)
+                                    .catchError((_) {
+                                  debugPrint(
+                                      "an error occurred while saving data to firestore");
+                                }),
+                                FirebaseFirestore.instance
+                                    .collection(
+                                        "/transfer/${paymentData.receiverId}/history")
+                                    .add(
+                                        {firestoreData} as Map<String, dynamic>)
+                                    .then((_) {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
                                           const SuccessPage()));
