@@ -30,7 +30,11 @@ class _QRCreatorState extends State<QRCreator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(translate('qr_creator_screen.title'))),
+      appBar: AppBar(
+        title: Text(translate('qr_creator_screen.title')),
+        backgroundColor: Styles.primaryColor,
+        foregroundColor: Styles.secondaryColor,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -105,7 +109,7 @@ class _QRCreatorState extends State<QRCreator> {
       generator
           .generate(
         data:
-            "paysnap://payment?receiverId=${user!.uid}&receiverName=${user!.displayName}&product=$product&amount=$amount",
+            "paysnap://payment?receiverId=${user!.uid}&receiverName=${user.displayName}&product=$product&amount=$amount",
         filePath: '$appDocPath/qr.png',
       )
           .then((value) {

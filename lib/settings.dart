@@ -18,6 +18,8 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('settings_screen.title')),
+        backgroundColor: Styles.primaryColor,
+        foregroundColor: Styles.secondaryColor,
       ),
       body: SettingsList(
         sections: [

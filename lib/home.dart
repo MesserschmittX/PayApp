@@ -169,7 +169,8 @@ class _HomePageState extends State<HomePage> {
             child: Image.asset('assets/images/paysnap_appLogo.png'),
           ),
           title: Text(translate('home_screen.title')),
-          backgroundColor: Styles.secondaryColor,
+          backgroundColor: Styles.primaryColor,
+          foregroundColor: Styles.secondaryColor,
           actions: <Widget>[
             PopupMenuButton(
                 icon: const Icon(Icons.menu),

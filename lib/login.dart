@@ -86,6 +86,8 @@ class LoginState extends State<Login> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(translate('login_screen.title')),
+          backgroundColor: Styles.primaryColor,
+          foregroundColor: Styles.secondaryColor,
           automaticallyImplyLeading: false,
         ),
         body: SingleChildScrollView(

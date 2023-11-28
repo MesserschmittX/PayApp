@@ -11,6 +11,8 @@ class SuccessPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(translate("payment_success_screen.title")),
+          backgroundColor: Styles.primaryColor,
+          foregroundColor: Styles.secondaryColor,
           automaticallyImplyLeading: false,
         ),
         body: Container(
