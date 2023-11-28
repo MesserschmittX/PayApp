@@ -86,36 +86,35 @@ class PaymentPage extends StatelessWidget {
                     "amount": paymentData.amount,
                     "timestamp": DateTime.now(),
                   };
-                  PaypalService().makePayment(
-                      paymentData.amount,
-                      (String msg) => {
-                            if (msg.startsWith("Order successful") ||
-                                msg.startsWith("shipping change"))
-                              {
-                                FirebaseFirestore.instance
-                                    .collection(
-                                        "/transfer/${auth.currentUser!.uid}/history")
-                                    .add(
-                                        {firestoreData} as Map<String, dynamic>)
-                                    .catchError((_) {
-                                  debugPrint(
-                                      "an error occurred while saving data to firestore");
-                                }),
-                                FirebaseFirestore.instance
-                                    .collection(
-                                        "/transfer/${paymentData.receiverId}/history")
-                                    .add(
-                                        {firestoreData} as Map<String, dynamic>)
-                                    .then((_) {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SuccessPage()));
-                                }).catchError((_) {
-                                  debugPrint(
-                                      "an error occurred while saving data to firestore");
-                                }),
-                              }
-                          });
+                  PaypalService().makePayment(paymentData.amount, (String msg) {
+                    if (msg.startsWith("Order successful") ||
+                        msg.startsWith("shipping change")) {
+                      firestoreData['amount'] *= -1;
+                      FirebaseFirestore.instance
+                          .collection(
+                              "/transfer/${auth.currentUser!.uid}/history")
+                          .add(firestoreData)
+                          .then((_) {})
+                          .catchError((_) {
+                        print(
+                            "an error occurred while saving data to firestore");
+                      });
+                      firestoreData['amount'] *= -1;
+                      FirebaseFirestore.instance
+                          .collection(
+                              "/transfer/${paymentData.receiverId}/history")
+                          .add(firestoreData)
+                          .then((_) {
+                        print("makepayment then");
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const SuccessPage()));
+                      }).catchError((_) {
+                        debugPrint(
+                            "an error occurred while saving data to firestore");
+                      });
+                      print("makepayment after");
+                    }
+                  });
                 },
               ),
             ),

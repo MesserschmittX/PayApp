@@ -258,48 +258,28 @@ class _HomePageState extends State<HomePage> {
                         return Card(
                             child: Column(
                           children: [
-                            if (snapshot.data![index]['receiverId'] ==
-                                auth.currentUser!.uid)
-                              ListTile(
-                                leading: const Icon(
-                                  Icons.paid,
-                                  color: Styles.primaryColor,
-                                ),
-                                title: Text(
-                                  'Receiver: ${snapshot.data![index]['receiverId']}',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                ),
-                                subtitle: Row(children: <Widget>[
-                                  Text(
-                                    '${timestamp.toDate().day}.${timestamp.toDate().month}.${timestamp.toDate().year}\n${snapshot.data![index]['product']} | -${snapshot.data![index]['amount']} € EUR',
-                                    style: const TextStyle(fontSize: 17),
-                                  ),
-                                ]),
-                                isThreeLine: true,
+                            ListTile(
+                              leading: Icon(
+                                Icons.paid,
+                                color: snapshot.data![index]['amount'] > 0
+                                    ? Styles.primaryColor
+                                    : Colors.red,
                               ),
-                            if (snapshot.data![index]['senderId'] ==
-                                auth.currentUser!.uid)
-                              ListTile(
-                                leading: const Icon(
-                                  Icons.paid,
-                                  color: Styles.primaryColor,
-                                ),
-                                title: Text(
-                                  'Sender: ${snapshot.data![index]['senderId']}',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                ),
-                                subtitle: Row(children: <Widget>[
-                                  Text(
-                                    '${timestamp.toDate().day}.${timestamp.toDate().month}.${timestamp.toDate().year}\n${snapshot.data![index]['product']} | +${snapshot.data![index]['amount']} € EUR',
-                                    style: const TextStyle(fontSize: 17),
-                                  ),
-                                ]),
-                                isThreeLine: true,
+                              title: Text(
+                                snapshot.data![index]['amount'] > 0
+                                    ? 'Sender: ${snapshot.data![index]['senderName']}'
+                                    : 'Receiver: ${snapshot.data![index]['receiverName']}',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
                               ),
+                              subtitle: Row(children: <Widget>[
+                                Text(
+                                  '${timestamp.toDate().day}.${timestamp.toDate().month}.${timestamp.toDate().year}\n${snapshot.data![index]['product']} | ${snapshot.data![index]['amount']} € EUR',
+                                  style: const TextStyle(fontSize: 17),
+                                ),
+                              ]),
+                              isThreeLine: true,
+                            ),
                           ],
                         ));
                       },
