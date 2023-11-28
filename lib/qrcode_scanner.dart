@@ -129,9 +129,10 @@ class _QRScannerState extends State<QRScanner> {
       } else if (result != null &&
           result!.format.name == 'qrcode' &&
           (result!.code!.startsWith('paysnap://payment?') &&
-              result!.code!.contains('amount=') &&
+              result!.code!.contains('receiverId=') &&
+              result!.code!.contains('receiverName=') &&
               result!.code!.contains('product=') &&
-              result!.code!.contains('uid='))) {
+              result!.code!.contains('amount='))) {
         try {
           Uri uri = Uri.parse(result!.code!);
           String? amountString = uri.queryParameters['amount'];
