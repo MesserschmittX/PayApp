@@ -94,7 +94,8 @@ class _QRCreatorState extends State<QRCreator> {
     String appDocPath = (await getApplicationDocumentsDirectory()).path;
 
     User? user = FirebaseAuth.instance.currentUser;
-    double? amount = double.tryParse(amountController.text);
+    double? amount =
+        double.tryParse(amountController.text.replaceAll(',', '.'));
     String product = productController.text;
 
     String? errorMessage = _validateInput();
