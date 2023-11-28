@@ -82,7 +82,7 @@ class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvoked: (val) => false,
+      canPop: false,
       child: Scaffold(
         appBar: AppBar(
           title: Text(translate('login_screen.title')),

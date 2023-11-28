@@ -161,7 +161,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvoked: (val) => false,
+      canPop: false,
       child: Scaffold(
         appBar: AppBar(
           leading: Padding(
