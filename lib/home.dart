@@ -58,7 +58,6 @@ class _HomePageState extends State<HomePage> {
       print(doc);
       payments.add(doc.data() as Map<String, dynamic>);
     }
-    print(payments);
 
     return payments;
   }
