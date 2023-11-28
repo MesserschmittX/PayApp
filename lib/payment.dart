@@ -66,7 +66,7 @@ class PaymentPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("${paymentData.amount} €",
+                  Text("${paymentData.amount.toStringAsFixed(2)} €",
                       style: const TextStyle(fontSize: 40))
                 ],
               ),

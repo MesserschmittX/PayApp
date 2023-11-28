@@ -255,6 +255,8 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         Timestamp timestamp =
                             snapshot.data![index]['timestamp'];
+                        String amountString =
+                            snapshot.data![index]['amount'].toStringAsFixed(2);
                         return Card(
                             child: Column(
                           children: [
@@ -274,7 +276,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               subtitle: Row(children: <Widget>[
                                 Text(
-                                  '${timestamp.toDate().day}.${timestamp.toDate().month}.${timestamp.toDate().year}\n${snapshot.data![index]['product']} | ${snapshot.data![index]['amount']} € EUR',
+                                  '${timestamp.toDate().day}.${timestamp.toDate().month}.${timestamp.toDate().year}\n${snapshot.data![index]['product']} | $amountString € EUR',
                                   style: const TextStyle(fontSize: 17),
                                 ),
                               ]),
