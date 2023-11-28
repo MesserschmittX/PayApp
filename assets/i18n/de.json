@@ -144,7 +144,7 @@
     "about_screen": {
         "title": "Über",
         "headline1": "ENTWICKELT VON",
-        "description1.1": "Daniel Messerschmitt",
+        "description1.1": "Daniel Schröder",
         "description1.2": "Kevin Hoss",
         "description1.3": "Robert Bosch GmbH",
         "headline2": "PROJEKT",
@@ -161,7 +161,7 @@
         "invalid_email": "Die Email Addresse ist ungültig",
         "weak_password": "Das Passwort muss mindestens 6 Zeichen lang sein",
         "wrong_password": "Die Email oder das Passwort ist falsch",
-        "invalid_credential": "Die Email oder das Passwort ist falsch",
+        "invalid_credential": "Deine Anmeldedaten sind falsch",
         "email_already_exists": "Die Email Addresse ist bereits registriert",
         "different_password": "Die neuen Passwörter stimmen nicht überein",
         "failed_re_auth": "Authentifizierung fehlgeschlagen. Bitte melden Sie sich erneut an",

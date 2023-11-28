@@ -144,7 +144,7 @@
     "about_screen": {
         "title": "About",
         "headline1": "DEVELOPED BY",
-        "description1.1": "Daniel Messerschmitt",
+        "description1.1": "Daniel Schröder",
         "description1.2": "Kevin Hoss",
         "description1.3": "Robert Bosch GmbH",
         "headline2": "PROJECT",
@@ -161,7 +161,7 @@
         "invalid_email": "Your email address appears to be malformed",
         "weak_password": "Your password should be at least 6 characters",
         "wrong_password": "Your email or password is wrong",
-        "invalid_credential": "Your email or password is wrong",
+        "invalid_credential": "Your credentials are invalid",
         "email_already_exists": "The email address is already in use by another account",
         "different_password": "The new passwords do not match",
         "failed_re_auth": "Failed authentication with current credentials",

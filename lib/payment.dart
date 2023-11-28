@@ -96,7 +96,7 @@ class PaymentPage extends StatelessWidget {
                           .add(firestoreData)
                           .then((_) {})
                           .catchError((_) {
-                        print(
+                        debugPrint(
                             "an error occurred while saving data to firestore");
                       });
                       firestoreData['amount'] *= -1;
@@ -105,14 +105,12 @@ class PaymentPage extends StatelessWidget {
                               "/transfer/${paymentData.receiverId}/history")
                           .add(firestoreData)
                           .then((_) {
-                        print("makepayment then");
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const SuccessPage()));
                       }).catchError((_) {
                         debugPrint(
                             "an error occurred while saving data to firestore");
                       });
-                      print("makepayment after");
                     }
                   });
                 },
