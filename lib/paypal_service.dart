@@ -49,13 +49,18 @@ class PaypalService {
       //your app id !!! No Underscore!!! see readme.md for help
       returnUrl: "com.payment.paysnap://paypalpay",
       //client id from developer dashboard
+
+      //* sandbox
       clientID:
           "AWU5P1hIhIrLzXwI3hIeT4OO52gCls-GH483l-tnPNPNw1hZR9oA4UhUJNlWZhX-juCrddTi8nlewzaO",
-      //clientID:
-      //    "AWb9Y3UG5d30Td2TGeUB4nXXOrrLanKANm1ESqf9uzvvXKbfGn6APCLi-mANRDWbD3FQqEpAMDPfR0hI",
-      //sandbox, staging, live etc
       payPalEnvironment: FPayPalEnvironment.sandbox,
-      //payPalEnvironment: FPayPalEnvironment.live,
+      // */
+      /* live 
+      clientID:
+          "AWb9Y3UG5d30Td2TGeUB4nXXOrrLanKANm1ESqf9uzvvXKbfGn6APCLi-mANRDWbD3FQqEpAMDPfR0hI",
+      payPalEnvironment: FPayPalEnvironment.live,
+      // */
+
       //what currency do you plan to use?
       currencyCode: FPayPalCurrencyCode.eur,
       //action pay now?
