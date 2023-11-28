@@ -10,7 +10,7 @@
             "create_qr_code": "QR-Code erstellen"
         },
         "transactions": {
-            "past_transactions": "Bisherige Zahlungen",
+            "receiver_label": "Empfänger",
             "error_loading_data": "Fehler beim Laden der Daten",
             "no_transaction_history": "Keine Zahlungshistorie vorhanden"
         },

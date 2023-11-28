@@ -10,7 +10,7 @@
             "create_qr_code": "Create QR-Code"
         },
         "transactions": {
-            "past_transactions": "Transactions",
+            "receiver_label": "Receiver",
             "error_loading_data": "Error loading data",
             "no_transaction_history": "No transaction history"
         },

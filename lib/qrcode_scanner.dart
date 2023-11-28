@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:paysnap/styles.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -53,7 +54,10 @@ class _QRScannerState extends State<QRScanner> {
                       Container(
                         margin: const EdgeInsets.all(8),
                         child: IconButton(
-                          icon: const Icon(Icons.lightbulb),
+                          icon: const Icon(
+                            Icons.lightbulb,
+                            color: Styles.primaryColor,
+                          ),
                           onPressed: () async {
                             await controller?.toggleFlash();
                             setState(() {});
@@ -63,7 +67,10 @@ class _QRScannerState extends State<QRScanner> {
                       Container(
                         margin: const EdgeInsets.all(8),
                         child: IconButton(
-                          icon: const Icon(Icons.cameraswitch),
+                          icon: const Icon(
+                            Icons.cameraswitch,
+                            color: Styles.primaryColor,
+                          ),
                           onPressed: () async {
                             await controller?.flipCamera();
                             setState(() {});

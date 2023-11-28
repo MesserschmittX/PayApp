@@ -83,12 +83,12 @@ class UserNewState extends State<UserNew> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 60.0),
+              padding: const EdgeInsets.only(top: 60.0, bottom: 20),
               child: Center(
                 child: SizedBox(
                     width: 200,
                     height: 150,
-                    child: Image.asset('assets/images/paysnap_appLogo.png')),
+                    child: Image.asset('assets/images/paysnap_loginLogo.png')),
               ),
             ),
             Padding(

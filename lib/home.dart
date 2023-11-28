@@ -270,7 +270,7 @@ class _HomePageState extends State<HomePage> {
                               title: Text(
                                 snapshot.data![index]['amount'] > 0
                                     ? 'Sender: ${snapshot.data![index]['senderName']}'
-                                    : 'Receiver: ${snapshot.data![index]['receiverName']}',
+                                    : '${translate("home_screen.transactions.receiver_label")} : ${snapshot.data![index]['receiverName']}',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 20),
                               ),
