@@ -48,14 +48,15 @@ class _HomePageState extends State<HomePage> {
 
   Future<List<Map<String, dynamic>>> getPaymentHistory(String uid) async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('/transfer/kevin112/history')
+        .collection('/transfer/kevin11/history')
         .get();
 
     List<Map<String, dynamic>> payments = [];
 
-    querySnapshot.docs.map((doc) {
+    QueryDocumentSnapshot doc;
+    for (doc in querySnapshot.docs) {
       payments.add(doc.data() as Map<String, dynamic>);
-    });
+    }
 
     return payments;
   }
@@ -244,7 +245,10 @@ class _HomePageState extends State<HomePage> {
                             child: Column(
                           children: [
                             ListTile(
-                                leading: const Icon(Icons.paid),
+                                leading: const Icon(
+                                  Icons.paid,
+                                  color: Styles.primaryColor,
+                                ),
                                 title: Text(
                                   'Receiver: ${snapshot.data![index]['receiver']}',
                                   style: const TextStyle(

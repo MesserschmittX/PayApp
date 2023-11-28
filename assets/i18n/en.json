@@ -138,7 +138,12 @@
     },
     "about_screen": {
         "title": "About",
-        "description": "App was developed by Daniel and Kevin"
+        "headline1": "Powered by",
+        "description1.1": "Daniel",
+        "description1.2": "Kevin Hoss",
+        "description1.3": "Duale Hochschule Badenwürttemberg CAS",
+        "headline2": "Development",
+        "description2.1": "PaySnap was created in"
     },
     "license_screen": {
         "title": "Open Source Licenses"

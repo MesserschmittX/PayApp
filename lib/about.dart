@@ -8,6 +8,6 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(title: Text(translate("about_screen.title"))),
       body: Column(
-        children: [Text(translate('about_screen.description'))],
+        children: [Text(translate('about_screen.headline1'))],
       ));
 }

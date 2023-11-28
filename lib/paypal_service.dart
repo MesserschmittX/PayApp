@@ -29,9 +29,9 @@ class PaypalService {
       _flutterPaypalNativePlugin.removeAllPurchaseItems();
       _flutterPaypalNativePlugin.addPurchaseUnit(
         FPayPalPurchaseUnit(
-          amount: price,
-          currencyCode: FPayPalCurrencyCode.eur,
-        ),
+            amount: price,
+            currencyCode: FPayPalCurrencyCode.eur,
+            referenceId: '2'),
       );
     }
 
