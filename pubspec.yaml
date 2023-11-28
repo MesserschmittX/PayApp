@@ -55,6 +55,7 @@ dependencies:
   printing: ^5.11.1
   pdf: ^3.10.6
   cloud_firestore: ^4.13.2
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

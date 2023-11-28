@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:paysnap/styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'init.dart';
 import 'splash_screen.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   final Future _initFuture = Init.initialize();
 
-  Brightness _brightness = Brightness.light;
+  Brightness _brightness = Styles.currentBrightness;
 
   void _changeBrightness(Brightness newBrightness) {
     setState(() {
@@ -37,6 +38,17 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    SharedPreferences.getInstance().then((sharedPreferences) {
+      Brightness brightness = sharedPreferences.getBool('isDark') == true
+          ? Brightness.dark
+          : Brightness.light;
+      _changeBrightness(brightness);
+
+      String? language = sharedPreferences.getString('language');
+      if (language != null) {
+        changeLocale(context, language);
+      }
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       //PASSING THE FUNCTION AS PARAMETER
       Styles.changeBrightness = _changeBrightness;

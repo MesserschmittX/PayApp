@@ -81,7 +81,8 @@
                     "de": "German"
                 },
                 "change_language_button": "Change language",
-                "cancel_button": "Cancel"
+                "cancel_button": "Cancel",
+                "restart_app_notification": "Restart the app to apply all changes"
             },
             "dark_mode_setting": {
                 "name": "Color theme",

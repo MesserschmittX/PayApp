@@ -73,11 +73,11 @@ class _QRCreatorState extends State<QRCreator> {
                 height: Styles.buttonHeight,
                 width: Styles.buttonWidth,
                 child: FilledButton(
-                  child:
-                      Text(translate('qr_creator_screen.create_code_button')),
                   onPressed: !_createEnabled
                       ? null
                       : () async => await _createQRCode(),
+                  child:
+                      Text(translate('qr_creator_screen.create_code_button')),
                 ),
               ),
             ),
@@ -119,8 +119,8 @@ class _QRCreatorState extends State<QRCreator> {
 
   String? _validateInput() {
     User? user = FirebaseAuth.instance.currentUser;
-    String amountInput_formatted = amountController.text.replaceAll(',', '.');
-    double? amount = double.tryParse(amountInput_formatted);
+    String amountInputFormatted = amountController.text.replaceAll(',', '.');
+    double? amount = double.tryParse(amountInputFormatted);
 
     if (user == null) {
       return translate('qr_creator_screen.error.no_user');

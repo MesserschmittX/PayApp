@@ -88,7 +88,7 @@ class UserNewState extends State<UserNew> {
                 child: SizedBox(
                     width: 200,
                     height: 150,
-                    child: Image.asset('assets/images/paysnap.png')),
+                    child: Image.asset('assets/images/paysnap_appLogo.png')),
               ),
             ),
             Padding(

@@ -81,7 +81,8 @@
                     "de": "Deutsch"
                 },
                 "change_language_button": "Sprache ändern",
-                "cancel_button": "Abbrechen"
+                "cancel_button": "Abbrechen",
+                "restart_app_notification": "Die App muss neu gestartet werden, um die Änderungen vollständig zu übernehmen"
             },
             "dark_mode_setting": {
                 "name": "Farbmodus",

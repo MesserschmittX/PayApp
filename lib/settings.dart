@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:paysnap/styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'login.dart';
 import 'user_change_password.dart';
 
@@ -41,7 +42,7 @@ class SettingsPage extends StatelessWidget {
                         'settings_screen.general_settings.dark_mode_setting.themes.dark')
                     : translate(
                         'settings_screen.general_settings.dark_mode_setting.themes.light')),
-                onPressed: (context) async => switchTheme(context),
+                onPressed: (context) async => await switchTheme(context),
               ),
             ],
           ),
@@ -71,7 +72,12 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void switchTheme(context) {
+  Future switchTheme(context) async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    await sharedPreferences.setBool(
+        'isDark', Theme.of(context).brightness == Brightness.light);
+
     Styles.changeBrightness!(Brightness.dark == Theme.of(context).brightness
         ? Brightness.light
         : Brightness.dark);
@@ -98,12 +104,16 @@ class SettingsPage extends StatelessWidget {
           CupertinoActionSheetAction(
             child: Text(translate(
                 'settings_screen.general_settings.language_setting.language.en')),
-            onPressed: () => Navigator.pop(context, 'en'),
+            onPressed: () async {
+              await saveLocale('en', context);
+            },
           ),
           CupertinoActionSheetAction(
             child: Text(translate(
                 'settings_screen.general_settings.language_setting.language.de')),
-            onPressed: () => Navigator.pop(context, 'de'),
+            onPressed: () async {
+              await saveLocale('de', context);
+            },
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
@@ -114,6 +124,20 @@ class SettingsPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future saveLocale(String locale, context) async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    await sharedPreferences.setString('language', locale);
+
+    final snackBar = SnackBar(
+      content: Text(translate(
+          'settings_screen.general_settings.language_setting.restart_app_notification')),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    Navigator.pop(context, locale);
   }
 
   Future<void> logout(Function done) async {

@@ -55,7 +55,6 @@ class _HomePageState extends State<HomePage> {
 
     QueryDocumentSnapshot doc;
     for (doc in querySnapshot.docs) {
-      print(doc);
       payments.add(doc.data() as Map<String, dynamic>);
     }
 
@@ -162,7 +161,10 @@ class _HomePageState extends State<HomePage> {
       onPopInvoked: (val) => false,
       child: Scaffold(
         appBar: AppBar(
-          leading: Image.asset('assets/images/paysnap.png'),
+          leading: Padding(
+            padding: const EdgeInsets.all(5),
+            child: Image.asset('assets/images/paysnap_appLogo.png'),
+          ),
           title: Text(translate('home_screen.title')),
           backgroundColor: Styles.secondaryColor,
           actions: <Widget>[
