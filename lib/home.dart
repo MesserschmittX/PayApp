@@ -151,10 +151,6 @@ class _HomePageState extends State<HomePage> {
         openPage(const AboutPage());
       case 'licenses':
         openPage(const OssLicensesPage());
-      case 'refresh_transactions':
-        setState(() {
-          paymentHistory = getPaymentHistory(auth.currentUser!.uid);
-        });
       case 'logout':
         await FirebaseAuth.instance.signOut();
         openPage(const Login());
@@ -164,6 +160,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> pullRefresh() async {
+      setState(() {
+        paymentHistory = getPaymentHistory(auth.currentUser!.uid);
+      });
+    }
+
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -197,11 +199,6 @@ class _HomePageState extends State<HomePage> {
                         value: "licenses",
                         child: Text(
                             translate('home_screen.context_menu.licenses')),
-                      ),
-                      PopupMenuItem(
-                        value: "refresh_transactions",
-                        child: Text(translate(
-                            'home_screen.context_menu.refresh_transactions')),
                       ),
                       PopupMenuItem(
                         value: "logout",
@@ -260,42 +257,46 @@ class _HomePageState extends State<HomePage> {
                     return Text(translate(
                         'home_screen.transactions.no_transaction_history'));
                   } else {
-                    return ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        Timestamp timestamp =
-                            snapshot.data![index]['timestamp'];
-                        String amountString =
-                            snapshot.data![index]['amount'].toStringAsFixed(2);
-                        return Card(
-                            child: Column(
-                          children: [
-                            ListTile(
-                              leading: Icon(
-                                Icons.paid,
-                                color: snapshot.data![index]['amount'] > 0
-                                    ? Styles.primaryColor
-                                    : Colors.red,
-                              ),
-                              title: Text(
-                                snapshot.data![index]['amount'] > 0
-                                    ? 'Sender: ${snapshot.data![index]['senderName']}'
-                                    : '${translate("home_screen.transactions.receiver_label")} : ${snapshot.data![index]['receiverName']}',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
-                              ),
-                              subtitle: Row(children: <Widget>[
-                                Text(
-                                  '${timestamp.toDate().day}.${timestamp.toDate().month}.${timestamp.toDate().year}\n${snapshot.data![index]['product']} | $amountString € EUR',
-                                  style: const TextStyle(fontSize: 17),
+                    return RefreshIndicator(
+                        onRefresh: pullRefresh,
+                        child: ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            Timestamp timestamp =
+                                snapshot.data![index]['timestamp'];
+                            String amountString = snapshot.data![index]
+                                    ['amount']
+                                .toStringAsFixed(2);
+                            return Card(
+                                child: Column(
+                              children: [
+                                ListTile(
+                                  leading: Icon(
+                                    Icons.paid,
+                                    color: snapshot.data![index]['amount'] > 0
+                                        ? Styles.primaryColor
+                                        : Colors.red,
+                                  ),
+                                  title: Text(
+                                    snapshot.data![index]['amount'] > 0
+                                        ? 'Sender: ${snapshot.data![index]['senderName']}'
+                                        : '${translate("home_screen.transactions.receiver_label")} : ${snapshot.data![index]['receiverName']}',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
+                                  subtitle: Row(children: <Widget>[
+                                    Text(
+                                      '${timestamp.toDate().day}.${timestamp.toDate().month}.${timestamp.toDate().year}\n${snapshot.data![index]['product']} | $amountString € EUR',
+                                      style: const TextStyle(fontSize: 17),
+                                    ),
+                                  ]),
+                                  isThreeLine: true,
                                 ),
-                              ]),
-                              isThreeLine: true,
-                            ),
-                          ],
+                              ],
+                            ));
+                          },
                         ));
-                      },
-                    );
                   }
                 },
               ),

@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('test', (WidgetTester tester) async {
     // check translations for missing keys
     var de = jsonDecode(await rootBundle.loadString('assets/i18n/de.json'));
     var en = jsonDecode(await rootBundle.loadString('assets/i18n/en.json'));
