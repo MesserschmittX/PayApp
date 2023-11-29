@@ -242,26 +242,34 @@ class _HomePageState extends State<HomePage> {
                 future: paymentHistory,
                 builder: (context,
                     AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: SizedBox(
-                        height: 50.0,
-                        width: 50.0,
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text(
-                        '${translate('home_screen.transactions.error_loading_data')}: ${snapshot.error}');
-                  } else if (snapshot.data!.isEmpty) {
-                    return Text(translate(
-                        'home_screen.transactions.no_transaction_history'));
-                  } else {
-                    return RefreshIndicator(
-                        onRefresh: pullRefresh,
-                        child: ListView.builder(
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
+                  return RefreshIndicator(
+                      onRefresh: pullRefresh,
+                      child: ListView.builder(
+                        itemCount: snapshot.connectionState ==
+                                    ConnectionState.waiting ||
+                                snapshot.hasError ||
+                                snapshot.data!.isEmpty
+                            ? 1
+                            : snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: SizedBox(
+                                height: 50.0,
+                                width: 50.0,
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: Text(
+                                    '${translate('home_screen.transactions.error_loading_data')}: ${snapshot.error}'));
+                          } else if (snapshot.data!.isEmpty) {
+                            return Center(
+                                child: Text(translate(
+                                    'home_screen.transactions.no_transaction_history')));
+                          } else {
                             Timestamp timestamp =
                                 snapshot.data![index]['timestamp'];
                             String amountString = snapshot.data![index]
@@ -295,9 +303,9 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ));
-                          },
-                        ));
-                  }
+                          }
+                        },
+                      ));
                 },
               ),
             ),
