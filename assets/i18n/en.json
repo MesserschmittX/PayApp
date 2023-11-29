@@ -23,6 +23,7 @@
             "settings": "Settings",
             "about": "About",
             "licenses": "Licenses",
+            "refresh_transactions": "Refresh transactions",
             "logout": "Logout"
         }
     },

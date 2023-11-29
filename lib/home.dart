@@ -151,6 +151,10 @@ class _HomePageState extends State<HomePage> {
         openPage(const AboutPage());
       case 'licenses':
         openPage(const OssLicensesPage());
+      case 'refresh_transactions':
+        setState(() {
+          paymentHistory = getPaymentHistory(auth.currentUser!.uid);
+        });
       case 'logout':
         await FirebaseAuth.instance.signOut();
         openPage(const Login());
@@ -193,6 +197,11 @@ class _HomePageState extends State<HomePage> {
                         value: "licenses",
                         child: Text(
                             translate('home_screen.context_menu.licenses')),
+                      ),
+                      PopupMenuItem(
+                        value: "refresh_transactions",
+                        child: Text(translate(
+                            'home_screen.context_menu.refresh_transactions')),
                       ),
                       PopupMenuItem(
                         value: "logout",

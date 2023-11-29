@@ -23,6 +23,7 @@
             "settings": "Einstellungen",
             "about": "Über",
             "licenses": "Lizensen",
+            "refresh_transactions": "Transaktionen Aktualisieren",
             "logout": "Abmelden"
         }
     },
