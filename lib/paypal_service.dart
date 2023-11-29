@@ -4,6 +4,7 @@ import 'package:flutter_paypal_native/models/custom/environment.dart';
 import 'package:flutter_paypal_native/models/custom/order_callback.dart';
 import 'package:flutter_paypal_native/models/custom/purchase_unit.dart';
 import 'package:flutter_paypal_native/models/custom/user_action.dart';
+import 'package:uuid/uuid.dart';
 
 class PaypalService {
   final _flutterPaypalNativePlugin = FlutterPaypalNative.instance;
@@ -31,7 +32,7 @@ class PaypalService {
         FPayPalPurchaseUnit(
             amount: price,
             currencyCode: FPayPalCurrencyCode.eur,
-            referenceId: '2'),
+            referenceId: const Uuid().v4()),
       );
     }
 
@@ -55,7 +56,7 @@ class PaypalService {
           "AWU5P1hIhIrLzXwI3hIeT4OO52gCls-GH483l-tnPNPNw1hZR9oA4UhUJNlWZhX-juCrddTi8nlewzaO",
       payPalEnvironment: FPayPalEnvironment.sandbox,
       // */
-      /* live 
+      /* live
       clientID:
           "AWb9Y3UG5d30Td2TGeUB4nXXOrrLanKANm1ESqf9uzvvXKbfGn6APCLi-mANRDWbD3FQqEpAMDPfR0hI",
       payPalEnvironment: FPayPalEnvironment.live,
