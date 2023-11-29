@@ -164,54 +164,82 @@ class _QRCreatorState extends State<QRCreator> {
                 final qrImage = pw.MemoryImage(qrBytes!);
                 final paypalLogo =
                     await rootBundle.load('assets/images/PayPal.png');
-                final imageBytes = paypalLogo.buffer.asUint8List();
-                final paypalLogoImage = pw.MemoryImage(imageBytes);
-                const pw.TextStyle textStyle = pw.TextStyle(fontSize: 35);
+                final paysnapLogo = await rootBundle
+                    .load('assets/images/paysnap_loginLogo.png');
+                final imageBytes_PayPal = paypalLogo.buffer.asUint8List();
+                final paypalLogoImage = pw.MemoryImage(imageBytes_PayPal);
+                final imageBytes_PaySnap = paysnapLogo.buffer.asUint8List();
+                final paysnapLogoImage = pw.MemoryImage(imageBytes_PaySnap);
+                const pw.TextStyle textStyle =
+                    pw.TextStyle(fontSize: 10, color: PdfColors.white);
 
                 doc.addPage(pw.Page(
-                    pageFormat: PdfPageFormat.a4,
+                    pageFormat: PdfPageFormat.a6,
                     theme: pw.ThemeData.withFont(
                       base: await PdfGoogleFonts.openSansRegular(),
                       bold: await PdfGoogleFonts.openSansBold(),
                       icons: await PdfGoogleFonts.materialIcons(),
                     ),
                     build: (pw.Context context) {
-                      return pw.Center(
-                        child: pw.Column(children: [
-                          pw.Column(
-                              mainAxisAlignment: pw.MainAxisAlignment.start,
+                      return pw.Container(
+                        decoration: pw.BoxDecoration(
+                          gradient: pw.LinearGradient(
+                            begin: pw.Alignment.topCenter,
+                            end: pw.Alignment.bottomCenter,
+                            colors: [
+                              PdfColor.fromRYB(1, 32, 89),
+                              PdfColor.fromRYB(5, 221, 249)
+                            ],
+                          ),
+                        ),
+                        child: pw.Padding(
+                          padding: const pw.EdgeInsets.only(
+                              left: 15, right: 15, top: 15),
+                          child: pw.Column(children: [
+                            pw.Column(
+                              mainAxisAlignment: pw.MainAxisAlignment.end,
                               children: [
                                 pw.Align(
-                                  alignment: pw.Alignment.centerLeft,
-                                  child: pw.Text(
-                                      '${translate('qr_creator_screen.product_label')}:',
-                                      style: textStyle),
-                                ),
-                                pw.Align(
-                                  alignment: pw.Alignment.centerLeft,
-                                  child: pw.Text(productController.text,
-                                      style: textStyle),
-                                ),
-                                pw.Align(
-                                  alignment: pw.Alignment.centerLeft,
-                                  child: pw.Text(
-                                      '${translate('qr_creator_screen.amount_label')}:',
-                                      style: textStyle),
-                                ),
-                                pw.Align(
-                                  alignment: pw.Alignment.centerLeft,
-                                  child: pw.Text('${amountController.text} €',
-                                      style: textStyle),
-                                ),
-                              ]),
-                          pw.Padding(
-                              padding: const pw.EdgeInsets.only(top: 40),
-                              child:
-                                  pw.Image(qrImage, width: 400, height: 400)),
-                          pw.Padding(
-                              padding: const pw.EdgeInsets.only(top: 40),
-                              child: pw.Image(paypalLogoImage, width: 150))
-                        ]),
+                                    alignment: pw.Alignment.centerRight,
+                                    child:
+                                        pw.Image(paysnapLogoImage, width: 100)),
+                              ],
+                            ),
+                            pw.Column(
+                                mainAxisAlignment: pw.MainAxisAlignment.start,
+                                children: [
+                                  pw.Align(
+                                    alignment: pw.Alignment.centerLeft,
+                                    child: pw.Text(
+                                        '${translate('qr_creator_screen.product_label')}:',
+                                        style: textStyle),
+                                  ),
+                                  pw.Align(
+                                    alignment: pw.Alignment.centerLeft,
+                                    child: pw.Text(productController.text,
+                                        style: textStyle),
+                                  ),
+                                  pw.Align(
+                                    alignment: pw.Alignment.centerLeft,
+                                    child: pw.Text(
+                                        '${translate('qr_creator_screen.amount_label')}:',
+                                        style: textStyle),
+                                  ),
+                                  pw.Align(
+                                    alignment: pw.Alignment.centerLeft,
+                                    child: pw.Text('${amountController.text} €',
+                                        style: textStyle),
+                                  ),
+                                ]),
+                            pw.Padding(
+                                padding: const pw.EdgeInsets.only(top: 40),
+                                child:
+                                    pw.Image(qrImage, width: 100, height: 100)),
+                            pw.Padding(
+                                padding: const pw.EdgeInsets.only(top: 40),
+                                child: pw.Image(paypalLogoImage, width: 100))
+                          ]),
+                        ),
                       ); // Center
                     })); // Page
                 await Printing.layoutPdf(

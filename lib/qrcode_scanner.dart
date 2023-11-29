@@ -50,7 +50,10 @@ class _QRScannerState extends State<QRScanner> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text(translate('qr_scanner_screen.scan_qr_code')),
+                  Text(
+                    translate('qr_scanner_screen.scan_qr_code'),
+                    style: const TextStyle(fontSize: 16),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
