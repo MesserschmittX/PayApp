@@ -106,7 +106,7 @@
         "cancel_button": "Abbrechen"
     },
     "payment_success_screen": {
-        "title": "Überweiseung erfolgreich",
+        "title": "Überweisung erfolgreich",
         "close_button": "Schließen"
     },
     "user_new_screen": {

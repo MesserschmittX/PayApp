@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
     for (doc in querySnapshot.docs) {
       payments.add(doc.data() as Map<String, dynamic>);
     }
-
+    payments.sort((a, b) => b['timestamp'].compareTo(a['timestamp']));
     return payments;
   }
 

@@ -43,7 +43,7 @@ class AboutPage extends StatelessWidget {
                       'assets/images/bosch_logo.png',
                       alignment: Alignment.centerLeft,
                     )),
-                const SizedBox(height: 35),
+                const SizedBox(height: 20),
                 Text(
                   translate('about_screen.headline2'),
                   style: Styles.aboutHeadline,
@@ -69,7 +69,7 @@ class AboutPage extends StatelessWidget {
                       'assets/images/dhbw_cas_logo.png',
                       alignment: Alignment.centerLeft,
                     )),
-                const SizedBox(height: 35),
+                const SizedBox(height: 25),
                 Text(
                   translate('about_screen.headline3'),
                   style: Styles.aboutHeadline,

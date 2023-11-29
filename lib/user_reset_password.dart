@@ -50,7 +50,7 @@ class UserResetPasswordState extends State<UserResetPassword> {
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('user_resetPassword_screen.title'),
-            style: TextStyle(fontSize: 25)),
+            style: const TextStyle(fontSize: 25)),
         backgroundColor: Styles.primaryColor,
         foregroundColor: Styles.secondaryColor,
       ),

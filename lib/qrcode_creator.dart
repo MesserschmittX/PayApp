@@ -166,10 +166,10 @@ class _QRCreatorState extends State<QRCreator> {
                     await rootBundle.load('assets/images/PayPal.png');
                 final paysnapLogo = await rootBundle
                     .load('assets/images/paysnap_loginLogo.png');
-                final imageBytes_PayPal = paypalLogo.buffer.asUint8List();
-                final paypalLogoImage = pw.MemoryImage(imageBytes_PayPal);
-                final imageBytes_PaySnap = paysnapLogo.buffer.asUint8List();
-                final paysnapLogoImage = pw.MemoryImage(imageBytes_PaySnap);
+                final imageBytesPayPal = paypalLogo.buffer.asUint8List();
+                final paypalLogoImage = pw.MemoryImage(imageBytesPayPal);
+                final imageBytesPaySnap = paysnapLogo.buffer.asUint8List();
+                final paysnapLogoImage = pw.MemoryImage(imageBytesPaySnap);
                 const pw.TextStyle textStyle =
                     pw.TextStyle(fontSize: 10, color: PdfColors.white);
 

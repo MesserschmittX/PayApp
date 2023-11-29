@@ -45,6 +45,8 @@ class OssLicensesPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(translate('license_screen.title')),
+          backgroundColor: Styles.primaryColor,
+          foregroundColor: Styles.secondaryColor,
         ),
         body: FutureBuilder<List<Package>>(
             future: _licenses,
